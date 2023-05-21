@@ -14,7 +14,12 @@ const Index = ({ courses }) => {
 
   return (
     <>
-      <h1 className="jumbotron text-center bg-primary">SKG University</h1>
+      <h1
+        className="jumbotron text-center bg-primary "
+        style={{ fontSize: "70px" }}
+      >
+        SKG University
+      </h1>
       <div
         className="container-fluid"
         style={{
