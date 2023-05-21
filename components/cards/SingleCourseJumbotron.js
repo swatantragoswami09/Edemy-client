@@ -62,7 +62,7 @@ const SingleCourseJombotron = ({
                 {paid
                   ? currencyFormatter({
                       amount: price,
-                      currency: "usd",
+                      currency: "inr",
                     })
                   : "Free"}
               </h4>
