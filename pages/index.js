@@ -1,27 +1,27 @@
-import { useState, useEffect } from "react";
 import axios from "axios";
 import CourseCard from "../components/cards/CourseCard";
-const Index = ({ courses }) => {
-  // const [courses, setCourses] = useState([]);
+import { useContext } from "react";
+import { DarkModeContext } from "../context/DarkModeContext";
 
-  // useEffect(() => {
-  //   const fetchCourse = async () => {
-  //     const { data } = await axios.get("api/courses");
-  //     setCourses(data);
-  //   };
-  //   fetchCourse();
-  // }, []);
+const Index = ({ courses }) => {
+  const { isDarkMode } = useContext(DarkModeContext);
 
   return (
-    <>
+    <div
+      className={`container-fluid ${isDarkMode ? "text-light" : ""}  ${
+        isDarkMode ? "bg-dark" : "bg-light"
+      }`}
+    >
       <h1
         className="jumbotron text-center bg-primary "
         style={{ fontSize: "70px" }}
       >
-        SKG University
+        SKG University {}
       </h1>
       <div
-        className="container-fluid"
+        className={`container-fluid ${isDarkMode ? "text-light" : ""}  ${
+          isDarkMode ? "bg-dark" : "bg-light"
+        }`}
         style={{
           display: "flex",
           flexDirection: "row",
@@ -38,7 +38,7 @@ const Index = ({ courses }) => {
           </div>
         ))}
       </div>
-    </>
+    </div>
   );
 };
 

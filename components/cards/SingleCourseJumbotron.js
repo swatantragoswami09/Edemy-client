@@ -2,6 +2,8 @@ import { currencyFormatter } from "../../utils/helpers";
 import { Badge, Modal, Button } from "antd";
 import ReactPlayer from "react-player";
 import { LoadingOutlined, SafetyOutlined } from "@ant-design/icons";
+import { useContext } from "react";
+import { DarkModeContext } from "../../context/DarkModeContext";
 
 const SingleCourseJombotron = ({
   course,
@@ -16,6 +18,8 @@ const SingleCourseJombotron = ({
   enrolled,
   setEnrolled,
 }) => {
+  const { isDarkMode } = useContext(DarkModeContext);
+
   const {
     name,
     description,
@@ -29,7 +33,11 @@ const SingleCourseJombotron = ({
   } = course;
 
   return (
-    <div className="container-fluid">
+    <div
+      className={`container-fluid ${isDarkMode ? "bg-dark" : "bg-primary"}   ${
+        isDarkMode ? "text-light" : "text-dark"
+      }`}
+    >
       <div className="row">
         <div className="jumbotron bg-primary square p-5">
           <div className="row">

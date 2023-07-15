@@ -5,6 +5,7 @@ import { SyncOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import { Context } from "../context";
 import { useRouter } from "next/router";
+import { DarkModeContext } from "../context/DarkModeContext";
 
 const Register = () => {
   const [name, setName] = useState("swatantra");
@@ -18,6 +19,8 @@ const Register = () => {
 
   // router
   const router = useRouter();
+  // DarkModeContext
+  const { isDarkMode } = useContext(DarkModeContext);
 
   useEffect(() => {
     if (user !== null) router.push("/");
@@ -47,42 +50,52 @@ const Register = () => {
   };
   return (
     <>
-      <h1 className="jumbotron text-center bg-primary square">Register</h1>
-      <div className="container col-md-4 offset-md-4 pb-5">
-        <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            className="form-control mb-4 p-4"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Enter name"
-          />
-          <input
-            type="email"
-            className="form-control mb-4 p-4"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Enter email"
-          />
-          <input
-            type="password"
-            className="form-control mb-4 p-4"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Enter password"
-          />
+      <div
+        className={`container-fluid ${isDarkMode ? "bg-dark" : "bg-light"} `}
+      >
+        <h1 className="jumbotron text-center bg-primary square">Register</h1>
+        <div className="container col-md-4 offset-md-4 pb-5">
+          <form onSubmit={handleSubmit}>
+            <input
+              type="text"
+              className={`form-control mb-4 p-4 pt-4 ${
+                isDarkMode ? "bg-dark text-light" : ""
+              }`}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Enter name"
+            />
+            <input
+              type="email"
+              className={`form-control mb-4 p-4 pt-4 ${
+                isDarkMode ? "bg-dark text-light" : ""
+              }`}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter email"
+            />
+            <input
+              type="password"
+              className={`form-control mb-4 p-4 pt-4 ${
+                isDarkMode ? "bg-dark text-light" : ""
+              }`}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Enter password"
+            />
 
-          <button
-            type="submit"
-            className="btn btn-block btn-primary form-control mb-4 p-2"
-            disabled={!name || !email || !password || loading}
-          >
-            {loading ? <SyncOutlined spin /> : "Submit"}
-          </button>
-        </form>
-        <p className="text-center p-3">
-          Already registered ? <Link href="/login">Login</Link>
-        </p>
+            <button
+              type="submit"
+              className="btn btn-block btn-primary form-control mb-4 p-2"
+              disabled={!name || !email || !password || loading}
+            >
+              {loading ? <SyncOutlined spin /> : "Submit"}
+            </button>
+          </form>
+          <p className={`text-center pt-3 ${isDarkMode ? "text-light" : ""}`}>
+            Already registered ? <Link href="/login">Login</Link>
+          </p>
+        </div>
       </div>
     </>
   );

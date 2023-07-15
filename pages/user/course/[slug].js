@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import axios from "axios";
-import { useState, useEffect, createElement } from "react";
+import { useState, useEffect, createElement, useContext } from "react";
 import StudentRoute from "../../../components/routes/StudentRoute";
 import { Button, Menu, Avatar } from "antd";
 import ReactPlayer from "react-player";
@@ -12,6 +12,7 @@ import {
   CheckCircleFilled,
   MinusCircleFilled,
 } from "@ant-design/icons";
+import { DarkModeContext } from "../../../context/DarkModeContext";
 
 const SingleCourse = () => {
   const [clicked, setClicked] = useState(-1);
@@ -22,6 +23,8 @@ const SingleCourse = () => {
   const [completedLessons, setCompletedLessons] = useState([]);
   // force state update
   const [updateState, setUpdateState] = useState(false);
+
+  const { isDarkMode, toggleDarkMode } = useContext(DarkModeContext);
 
   // router
   const router = useRouter();
@@ -111,10 +114,7 @@ const SingleCourse = () => {
                       style={{ marginTop: "13px" }}
                     />
                   ) : (
-                    <MinusCircleFilled
-                      className="float-right text-danger ml-2"
-                      // style={{ marginTop: "13px" }}
-                    />
+                    <MinusCircleFilled className="float-right text-danger ml-2" />
                   )}
                 </Menu.Item>
               );
@@ -124,7 +124,11 @@ const SingleCourse = () => {
         <div className="col">
           {clicked !== -1 ? (
             <>
-              <div className="col alert alert-primary square">
+              <div
+                className={`col alert alert-primary square ${
+                  isDarkMode ? "bg-primary" : ""
+                }   ${isDarkMode ? "text-light" : "text-dark"}`}
+              >
                 <b>{course.lessons[clicked].title.substring(0, 30)}</b>
                 {completedLessons.includes(course.lessons[clicked]._id) ? (
                   <span
@@ -157,7 +161,9 @@ const SingleCourse = () => {
                     </div>
                     <ReactMarkdown
                       children={course.lessons[clicked].content}
-                      className="single-post"
+                      className={`single-post ${
+                        isDarkMode ? "bg-dark" : ""
+                      }   ${isDarkMode ? "text-light" : "text-dark"}`}
                     />
                   </>
                 )}

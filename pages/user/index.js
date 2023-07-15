@@ -5,15 +5,13 @@ import axios from "axios";
 import { Avatar } from "antd";
 import Link from "next/link";
 import { SyncOutlined, PlayCircleOutlined } from "@ant-design/icons";
-// E-> Education
-// E-> Examination
-// E-> Experience
-// E-> Ethics
-// yeh mat bhoolna tony stark ne bhi iron man patharo ke beech banaya tha
+import { DarkModeContext } from "../../context/DarkModeContext";
 
 const UserIndex = () => {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  const { isDarkMode, toggleDarkMode } = useContext(DarkModeContext);
 
   const {
     state: { user },
@@ -47,7 +45,12 @@ const UserIndex = () => {
       {courses &&
         courses.map((course) => {
           return (
-            <div key={course._id} className="media pt-2 pb-1">
+            <div
+              key={course._id}
+              className={`media pt-2 pb-1 ${
+                isDarkMode ? "bg-dark" : "bg-light"
+              }   ${isDarkMode ? "text-light" : "text-dark"}`}
+            >
               <div className="media-body pl-2">
                 <div className="row">
                   <Avatar

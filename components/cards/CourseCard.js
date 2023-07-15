@@ -1,16 +1,11 @@
 import { Badge, Card } from "antd";
 import Link from "next/link";
 import { currencyFormatter } from "../../utils/helpers";
-import Image from "next/image";
 
 const { Meta } = Card;
 
 const CourseCard = ({ course }) => {
-  console.log("course=>", course);
   const { name, instructor, price, image, slug, paid, category } = course;
-  console.log("image=>", image);
-  // const imageUrl = image.Location;
-
   return (
     <Link href={`/course/${slug}`}>
       <a>
@@ -29,8 +24,11 @@ const CourseCard = ({ course }) => {
             />
           }
         >
-          <h2 className="font-weight-bold">{name}</h2>
-          <p>by {instructor.name}</p>
+          <Meta
+            title={name}
+            description={`by ${instructor.name}`}
+            style={{ marginBottom: "10px" }}
+          />
           <Badge
             count={category}
             style={{ backgroundColor: "#03a9f4" }}
@@ -40,7 +38,7 @@ const CourseCard = ({ course }) => {
             {paid
               ? currencyFormatter({
                   amount: price,
-                  currency: "inr", // want to change currency change here
+                  currency: "inr",
                 })
               : "Free"}
           </h4>
