@@ -91,7 +91,7 @@ const SingleCourse = ({ course }) => {
         enrolled={enrolled}
         setEnrolled={setEnrolled}
       />
-
+      {/* preview popup */}
       <PreviewModal
         showModal={showModal}
         setShowModal={setShowModal}

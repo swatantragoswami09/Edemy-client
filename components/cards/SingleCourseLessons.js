@@ -1,14 +1,22 @@
 import { List, Avatar } from "antd";
-
+import { useContext } from "react";
+import { DarkModeContext } from "../../context/DarkModeContext";
 const SingleCourseLessons = ({
   lessons,
   setPreview,
   showModal,
   setShowModal,
 }) => {
+  const { isDarkMode } = useContext(DarkModeContext);
+
   console.log("showModal=>", showModal);
   return (
-    <div className="container pt-5">
+    <div
+      className={`container-fluid   pt-5  ${
+        isDarkMode ? "bg-dark" : "bg-light"
+      }   ${isDarkMode ? "text-light" : "text-dark"}`}
+      style={{ padding: "0px 120px" }}
+    >
       <div className="row">
         <div className="col lesson-list">
           {lessons && <h4>{lessons.length} Lessons</h4>}
