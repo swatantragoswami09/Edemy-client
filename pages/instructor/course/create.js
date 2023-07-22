@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import InstructorRoute from "../../../components/routes/InstructorRoute";
 import CourseCreateForm from "../../../components/forms/CourseCreateForm";
 import Resizer from "react-image-file-resizer";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
+import { DarkModeContext } from "../../../context/DarkModeContext";
 
 const CourseCreate = () => {
   // state
@@ -24,6 +25,7 @@ const CourseCreate = () => {
   const [uploadButtionText, setUploadButtionText] = useState("Upload Image");
 
   const router = useRouter();
+  const { isDarkMode, toggleDarkMode } = useContext(DarkModeContext);
 
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
@@ -85,7 +87,7 @@ const CourseCreate = () => {
   return (
     <InstructorRoute>
       <h1 className="jumbotron text-center bg-primary square">Create Course</h1>
-      <div className="pt-3 pb-3">
+      <div className={`pt-3 pb-3  ${isDarkMode ? "bg-dark" : "bg-light"}`}>
         <CourseCreateForm
           handleSubmit={handleSubmit}
           handleImage={handleImage}
