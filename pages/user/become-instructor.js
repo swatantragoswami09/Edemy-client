@@ -9,6 +9,7 @@ import {
 } from "@ant-design/icons";
 import { toast } from "react-toastify";
 import UserRoute from "../../components/routes/UserRoute";
+import { DarkModeContext } from "../../context/DarkModeContext";
 
 const BecomeInstructor = () => {
   // state
@@ -17,6 +18,8 @@ const BecomeInstructor = () => {
     state: { user },
   } = useContext(Context);
 
+  const { isDarkMode, toggleDarkMode } = useContext(DarkModeContext);
+  // on clicking payout setup button
   const becomeInstructor = () => {
     setLoading(true);
     axios
@@ -38,7 +41,11 @@ const BecomeInstructor = () => {
       </h1>
       <div className="container">
         <div className="row">
-          <div className="col-md-6 offset-md-3 text-center">
+          <div
+            className={` col-md-6 offset-md-3 text-center ${
+              isDarkMode ? "bg-dark" : "bg-light"
+            }   ${isDarkMode ? "text-light" : "text-dark"}`}
+          >
             <UserSwitchOutlined className="display-1 pb-3" />
             <br />
             <h2>Setup payout to publish courses on Edemy</h2>

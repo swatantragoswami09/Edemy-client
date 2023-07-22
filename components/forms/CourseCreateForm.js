@@ -1,5 +1,7 @@
 import { Select, Button, Avatar, Badge } from "antd";
 const { Option } = Select;
+import { useContext } from "react";
+import { DarkModeContext } from "../../context/DarkModeContext";
 
 const CourseCreateForm = ({
   handleSubmit,
@@ -12,6 +14,8 @@ const CourseCreateForm = ({
   handleImageRemove = (f) => f,
   editPage = false,
 }) => {
+  const { isDarkMode, toggleDarkMode } = useContext(DarkModeContext);
+
   const children = []; // 9.99
   for (let i = 9.99; i < 99.99; i++) {
     children.push(<Option key={i.toFixed(2)}>${i.toFixed(2)}</Option>);
@@ -20,7 +24,10 @@ const CourseCreateForm = ({
   return (
     <>
       {values && (
-        <form className="form-group" onSubmit={handleSubmit}>
+        <form
+          className={`form-group ${isDarkMode ? "bg-dark" : "bg-light"}`}
+          onSubmit={handleSubmit}
+        >
           <div className="form-group">
             <input
               type="text"

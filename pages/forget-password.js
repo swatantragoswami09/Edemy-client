@@ -5,6 +5,7 @@ import { SyncOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import { Context } from "../context";
 import { useRouter } from "next/router";
+import { DarkModeContext } from "../context/DarkModeContext";
 
 const ForgetPassword = () => {
   // state
@@ -17,6 +18,8 @@ const ForgetPassword = () => {
   const {
     state: { user },
   } = useContext(Context);
+
+  const { isDarkMode } = useContext(DarkModeContext);
 
   // router
   const router = useRouter();
@@ -64,11 +67,14 @@ const ForgetPassword = () => {
       <h1 className="jumbotron text-center bg-primary square">
         Forget Password
       </h1>
-      <div className="container col-md-4 offset-md-4 pb-5">
+
+      <div className="container col-md-4 offset-md-4 pb-5 ">
         <form onSubmit={success ? handleResetPassword : handleSubmit}>
           <input
             type="email"
-            className="form-control mb-4 p-4"
+            className={`form-control mb-4 p-4 ${
+              isDarkMode ? "bg-dark text-light" : ""
+            }`}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Enter email"
@@ -78,7 +84,9 @@ const ForgetPassword = () => {
             <>
               <input
                 type="text"
-                className="form-control mb-4 p-4"
+                className={`form-control mb-4 p-4 ${
+                  isDarkMode ? "bg-dark text-light" : ""
+                }`}
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
                 placeholder="Enter secret code"
@@ -86,7 +94,9 @@ const ForgetPassword = () => {
               />
               <input
                 type="password"
-                className="form-control mb-4 p-4"
+                className={`form-control mb-4 p-4 ${
+                  isDarkMode ? "bg-dark text-light" : ""
+                }`}
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
                 placeholder="Enter new password"
@@ -98,7 +108,9 @@ const ForgetPassword = () => {
           <button
             type="submit"
             disabled={loading || !email}
-            className="btn btn-block btn-primary form-control mb-4 p-2"
+            className={`btn btn-block btn-primary form-control mb-4 p-2 ${
+              isDarkMode ? "btn-primary" : "btn-primary"
+            }`}
           >
             {loading ? <SyncOutlined spin /> : "Submit"}
           </button>

@@ -8,12 +8,16 @@ import {
   LoadingOutlined,
   SyncOutlined,
 } from "@ant-design/icons";
+import { DarkModeContext } from "../../context/DarkModeContext";
 
 import { currency, currencyFormatter } from "../../utils/helpers";
 
 const InstructorRevenue = () => {
   const [balance, setBalance] = useState({ pending: [] });
   const [loading, setLoading] = useState(false);
+
+  const { isDarkMode, toggleDarkMode } = useContext(DarkModeContext);
+
   useEffect(() => {
     sendBalanceRequest();
   }, []);
@@ -35,12 +39,20 @@ const InstructorRevenue = () => {
   };
   return (
     <InstructorRoute>
-      <div className="container">
+      <div>
         <div className="row pt-2">
-          <div className="col-md-8 offset-md-2 bg-light p-5">
+          <div
+            className={`col-md-8 offset-md-2 bg-light p-5   ${
+              isDarkMode ? "bg-dark" : "bg-light"
+            }   ${isDarkMode ? "text-light" : "text-dark"}`}
+          >
             <h2 style={{ display: "flex", justifyContent: "space-between" }}>
               Revenue report
-              <DollarOutlined className="float-right" />
+              <DollarOutlined
+                className={` float-right  ${
+                  isDarkMode ? "text-light" : "text-dark"
+                }`}
+              />
             </h2>
             <small>
               You get paid directly from stripe to your bank account every 48
