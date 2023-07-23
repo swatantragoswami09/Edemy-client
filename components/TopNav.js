@@ -5,7 +5,6 @@ import {
   AppstoreOutlined,
   CoffeeOutlined,
   LoginOutlined,
-  LogoutOutlined,
   UserAddOutlined,
   CarryOutOutlined,
   TeamOutlined,
@@ -145,7 +144,7 @@ const TopNav = () => {
             )}
             <SubMenu
               icon={<CoffeeOutlined />}
-              title={user && user.name}
+              title={user && user.user.name}
               className="float-right"
             >
               <ItemGroup>
