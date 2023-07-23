@@ -17,8 +17,8 @@ const CourseCreateForm = ({
   const { isDarkMode, toggleDarkMode } = useContext(DarkModeContext);
 
   const children = []; // 9.99
-  for (let i = 9.99; i < 99.99; i++) {
-    children.push(<Option key={i.toFixed(2)}>${i.toFixed(2)}</Option>);
+  for (let i = 1000; i < 20000; i += 1000) {
+    children.push(<Option key={i.toFixed(2)}>₹ {i.toFixed(2)}</Option>);
   }
   console.log("values=>", values);
   return (
@@ -66,7 +66,7 @@ const CourseCreateForm = ({
             {values.paid && (
               <div className="form-group pt-3">
                 <Select
-                  defaultValue="$9.99"
+                  defaultValue="₹ 1000"
                   style={{ width: "100%" }}
                   onChange={(v) => setValues({ ...values, price: v })}
                   tokenSeparators={[,]}

@@ -18,6 +18,7 @@ app
         createProxyMiddleware({
           target: "http://localhost:8000",
           // target: "http://192.168.0.103:8000",
+
           changeOrigin: true,
         })
       );
@@ -29,7 +30,7 @@ app
 
     server.listen(3000, (err) => {
       if (err) throw err;
-      console.log("> Ready on the http://192.168.0.103:8000");
+      console.log("> Ready on the http://localhost:8000");
     });
   })
   .catch((err) => {

@@ -82,6 +82,109 @@ const SingleCourse = () => {
       console.log(error);
     }
   };
+  const PlayVideos = (course) => {
+    return (
+      <>
+        {course.lessons[clicked].video &&
+          course.lessons[clicked].video.Location && (
+            <>
+              <div className="wrapper">
+                <ReactPlayer
+                  className="player"
+                  playing={false}
+                  url={course.lessons[clicked].video.Location}
+                  width="100%"
+                  height="100%"
+                  controls
+                  onEnded={() => markCompleted()}
+                />
+              </div>
+              <ReactMarkdown
+                children={course.lessons[clicked].content}
+                className={`single-post ${isDarkMode ? "bg-dark" : ""}   ${
+                  isDarkMode ? "text-light" : "text-dark"
+                }`}
+              />
+            </>
+          )}
+      </>
+    );
+  };
+  const MarkAsCompleteAndMarkAsIncomplete = (completedLessons) => {
+    return (
+      <>
+        {completedLessons.includes(course.lessons[clicked]._id) ? (
+          <span className="float-right pointer" onClick={markIncompleted}>
+            {" "}
+            Mark as Incomplete{" "}
+          </span>
+        ) : (
+          <span className="float-right pointer" onClick={markCompleted}>
+            {" "}
+            Mark as completed{" "}
+          </span>
+        )}
+      </>
+    );
+  };
+  const Clicked = (clicked, course) => {
+    return (
+      <>
+        {clicked !== -1 ? (
+          <>
+            <div
+              className={`col alert alert-primary square ${
+                isDarkMode ? "bg-primary" : ""
+              }   ${isDarkMode ? "text-light" : "text-dark"}`}
+            >
+              {/* mark as complete and incomplete header */}
+              <b>{course.lessons[clicked].title.substring(0, 30)}</b>
+              {MarkAsCompleteAndMarkAsIncomplete(completedLessons)}
+            </div>
+            {/* Vide player */}
+            {PlayVideos(course)}
+          </>
+        ) : (
+          <div className="d-flex justify-content-center p-5">
+            <div className="text-center p-5">
+              <PlayCircleFilled
+                className="text-primary display-1 p-5"
+                onClick={() => console.log("hit hrer")}
+              />
+              <p className={`lead ${isDarkMode ? "text-light" : "text-dark"}`}>
+                Click on the lesson to start learning
+              </p>
+            </div>
+          </div>
+        )}
+      </>
+    );
+  };
+  const sideBarLessons = (course) => {
+    return (
+      <>
+        {course.lessons.map((lesson, index) => {
+          return (
+            <Menu.Item
+              onClick={() => setClicked(index)}
+              key={index}
+              icon={<Avatar>{index + 1}</Avatar>}
+            >
+              {lesson.title.substring(0, 30)}{" "}
+              {completedLessons.includes(lesson._id) ? (
+                <CheckCircleFilled
+                  className="float-right text-primary ml-2"
+                  style={{ marginTop: "13px" }}
+                />
+              ) : (
+                <MinusCircleFilled className="float-right text-danger ml-2" />
+              )}
+            </Menu.Item>
+          );
+        })}
+      </>
+    );
+  };
 
   return (
     <StudentRoute>
@@ -100,83 +203,10 @@ const SingleCourse = () => {
             mode="inline"
             style={{ height: "80vh", overflow: "scroll" }}
           >
-            {course.lessons.map((lesson, index) => {
-              return (
-                <Menu.Item
-                  onClick={() => setClicked(index)}
-                  key={index}
-                  icon={<Avatar>{index + 1}</Avatar>}
-                >
-                  {lesson.title.substring(0, 30)}{" "}
-                  {completedLessons.includes(lesson._id) ? (
-                    <CheckCircleFilled
-                      className="float-right text-primary ml-2"
-                      style={{ marginTop: "13px" }}
-                    />
-                  ) : (
-                    <MinusCircleFilled className="float-right text-danger ml-2" />
-                  )}
-                </Menu.Item>
-              );
-            })}
+            {sideBarLessons(course)}
           </Menu>
         </div>
-        <div className="col">
-          {clicked !== -1 ? (
-            <>
-              <div
-                className={`col alert alert-primary square ${
-                  isDarkMode ? "bg-primary" : ""
-                }   ${isDarkMode ? "text-light" : "text-dark"}`}
-              >
-                <b>{course.lessons[clicked].title.substring(0, 30)}</b>
-                {completedLessons.includes(course.lessons[clicked]._id) ? (
-                  <span
-                    className="float-right pointer"
-                    onClick={markIncompleted}
-                  >
-                    {" "}
-                    Mark as Incomplete{" "}
-                  </span>
-                ) : (
-                  <span className="float-right pointer" onClick={markCompleted}>
-                    {" "}
-                    Mark as completed{" "}
-                  </span>
-                )}
-              </div>
-              {course.lessons[clicked].video &&
-                course.lessons[clicked].video.Location && (
-                  <>
-                    <div className="wrapper">
-                      <ReactPlayer
-                        className="player"
-                        playing={false}
-                        url={course.lessons[clicked].video.Location}
-                        width="100%"
-                        height="100%"
-                        controls
-                        onEnded={() => markCompleted()}
-                      />
-                    </div>
-                    <ReactMarkdown
-                      children={course.lessons[clicked].content}
-                      className={`single-post ${
-                        isDarkMode ? "bg-dark" : ""
-                      }   ${isDarkMode ? "text-light" : "text-dark"}`}
-                    />
-                  </>
-                )}
-            </>
-          ) : (
-            <div className="d-flex justify-content-center p-5">
-              <div className="text-center p-5">
-                <PlayCircleFilled className="text-primary display-1 p-5" />
-                <p className="lead">Click on the lesson to start learning</p>
-              </div>
-            </div>
-          )}
-        </div>
+        <div className="col">{Clicked(clicked, course)}</div>
       </div>
     </StudentRoute>
   );

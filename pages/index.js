@@ -1,10 +1,16 @@
 import axios from "axios";
 import CourseCard from "../components/cards/CourseCard";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { DarkModeContext } from "../context/DarkModeContext";
+import { useState } from "react";
 
 const Index = ({ courses }) => {
   const { isDarkMode } = useContext(DarkModeContext);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    courses ? setLoading(false) : setLoading(true);
+  }, [loading]);
 
   return (
     <div
@@ -16,7 +22,7 @@ const Index = ({ courses }) => {
         className="jumbotron text-center bg-primary "
         style={{ fontSize: "70px" }}
       >
-        SKG University {}
+        SKG University
       </h1>
       <div
         className={`container-fluid ${isDarkMode ? "text-light" : ""}  ${
@@ -31,10 +37,10 @@ const Index = ({ courses }) => {
         {courses.map((course) => (
           <div
             key={course._id}
-            className="col-md-4"
+            className="col-md-3"
             style={{ padding: "14px" }}
           >
-            <CourseCard course={course} />
+            <CourseCard loading={loading} course={course} />
           </div>
         ))}
       </div>

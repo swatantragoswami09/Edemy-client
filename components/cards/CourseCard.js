@@ -1,15 +1,17 @@
-import { Badge, Card } from "antd";
+import { Badge, Card, Avatar } from "antd";
 import Link from "next/link";
 import { currencyFormatter } from "../../utils/helpers";
 
 const { Meta } = Card;
 
-const CourseCard = ({ course }) => {
+const CourseCard = ({ loading, course }) => {
   const { name, instructor, price, image, slug, paid, category } = course;
+
   return (
     <Link href={`/course/${slug}`}>
       <a>
         <Card
+          loading={loading}
           className="mb-4"
           cover={
             <img
@@ -25,6 +27,9 @@ const CourseCard = ({ course }) => {
           }
         >
           <Meta
+            avatar={
+              <Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel&key=1" />
+            }
             title={name}
             description={`by ${instructor.name}`}
             style={{ marginBottom: "10px" }}
