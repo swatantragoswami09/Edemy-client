@@ -145,7 +145,7 @@ const TopNav = () => {
             )}
             <SubMenu
               icon={<CoffeeOutlined />}
-              title={user && user.name}
+              title={user.user && user.user.name}
               className="float-right"
             >
               <ItemGroup>

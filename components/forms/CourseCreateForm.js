@@ -32,7 +32,9 @@ const CourseCreateForm = ({
             <input
               type="text"
               name="name"
-              className="form-control"
+              className={`form-control ${
+                isDarkMode ? "bg-dark" : "bg-light"
+              }   ${isDarkMode ? "text-light" : "text-dark"}`}
               placeholder="Name"
               value={values.name}
               onChange={handleChange}
@@ -44,7 +46,9 @@ const CourseCreateForm = ({
               cols="7"
               rows="7"
               value={values.description}
-              className="form-control"
+              className={`form-control ${
+                isDarkMode ? "bg-dark" : "bg-light"
+              }   ${isDarkMode ? "text-light" : "text-dark"}`}
               onChange={handleChange}
             ></textarea>
           </div>
@@ -81,7 +85,9 @@ const CourseCreateForm = ({
             <input
               type="text"
               name="category"
-              className="form-control"
+              className={`form-control ${
+                isDarkMode ? "bg-dark" : "bg-light"
+              }   ${isDarkMode ? "text-light" : "text-dark"}`}
               placeholder="Category"
               value={values.category}
               onChange={handleChange}
