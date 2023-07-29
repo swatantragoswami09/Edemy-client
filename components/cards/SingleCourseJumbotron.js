@@ -1,5 +1,5 @@
 import { currencyFormatter } from "../../utils/helpers";
-import { Badge, Modal, Button } from "antd";
+import { Badge, Modal, Button, Rate } from "antd";
 import ReactPlayer from "react-player";
 import { LoadingOutlined, SafetyOutlined } from "@ant-design/icons";
 import { useContext } from "react";
@@ -65,7 +65,14 @@ const SingleCourseJombotron = ({
               <p>Last updated {new Date(updatedAt).toLocaleDateString()}</p>
 
               {/* price */}
-              <h4 className="text-light">
+              <h4
+                className="text-light"
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  flexWrap: "wrap",
+                }}
+              >
                 {" "}
                 {paid
                   ? currencyFormatter({
@@ -73,6 +80,13 @@ const SingleCourseJombotron = ({
                       currency: "inr",
                     })
                   : "Free"}
+                {/* rating */}
+                <Rate
+                  style={{ marginLeft: "30px" }}
+                  onChange={() => console.log(" start pressed")}
+                  allowHalf
+                  defaultValue={3.5}
+                />
               </h4>
             </div>
             <div className="col-md-4">

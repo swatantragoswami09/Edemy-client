@@ -1,6 +1,7 @@
 import { Badge, Card, Avatar } from "antd";
 import Link from "next/link";
 import { currencyFormatter } from "../../utils/helpers";
+import { Rate } from "antd";
 
 const { Meta } = Card;
 
@@ -39,14 +40,28 @@ const CourseCard = ({ loading, course }) => {
             style={{ backgroundColor: "#03a9f4" }}
             className="pb-2 mr-2"
           />
-          <h4 className="pt-2">
-            {paid
-              ? currencyFormatter({
-                  amount: price,
-                  currency: "inr",
-                })
-              : "Free"}
-          </h4>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              flexWrap: "wrap",
+            }}
+          >
+            <h4 className="pt-2">
+              {paid
+                ? currencyFormatter({
+                    amount: price,
+                    currency: "inr",
+                  })
+                : "Free"}
+            </h4>
+            <Rate
+              onChange={() => console.log(" start pressed")}
+              allowHalf
+              defaultValue={2.5}
+            />
+          </div>
         </Card>
       </a>
     </Link>

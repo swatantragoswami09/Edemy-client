@@ -24,6 +24,7 @@ const TopNav = () => {
   const { state, dispatch } = useContext(Context);
   const { user } = state;
   const { isDarkMode, toggleDarkMode } = useContext(DarkModeContext);
+  console.log("state=>", state);
 
   const router = useRouter();
 
