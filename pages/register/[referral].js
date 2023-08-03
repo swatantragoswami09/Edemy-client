@@ -24,7 +24,9 @@ const Register = () => {
   const { isDarkMode } = useContext(DarkModeContext);
 
   useEffect(() => {
-    if (user !== null) router.push("/");
+    if (user !== null) {
+      router.push("/");
+    }
   }, [user]);
 
   //   to get referralId from browser url
@@ -54,7 +56,7 @@ const Register = () => {
       setLoading(false);
     } catch (error) {
       if (error.response.data) {
-        // if error response is presesnt
+        // if error response is present
         toast.error(error.response.data);
       } else {
         // If the error response is not present, display a generic error message
@@ -63,6 +65,11 @@ const Register = () => {
       setLoading(false);
     }
   };
+
+  // Early return if user is already logged in
+  if (user !== null) {
+    return null;
+  }
 
   return (
     <>
