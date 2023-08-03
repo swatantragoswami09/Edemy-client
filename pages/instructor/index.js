@@ -1,11 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import InstructorRoute from "../../components/routes/InstructorRoute";
 import { Avatar, Tooltip } from "antd";
 import Link from "next/link";
 import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
+import { DarkModeContext } from "../../context/DarkModeContext";
+import { Context } from "../../context";
 const InstructorIndex = () => {
   const [courses, setCourses] = useState([]);
+  const { isDarkMode, toggleDarkMode } = useContext(DarkModeContext);
 
   useEffect(() => {
     loadCourses();
@@ -19,7 +22,11 @@ const InstructorIndex = () => {
 
   return (
     <InstructorRoute>
-      <h1 className="jumbotron text-center bg-primary square">
+      <h1
+        className={`jumbotron text-center bg-primary square ${
+          isDarkMode ? "bg-dark text-light" : ""
+        }`}
+      >
         Instructor Dashboard
       </h1>
       {courses &&
@@ -41,7 +48,10 @@ const InstructorIndex = () => {
                         <h5 className="pt-2">{course.name}</h5>
                       </a>
                     </Link>
-                    <p style={{ marginTop: "-10px" }}>
+                    <p
+                      className={`${isDarkMode ? "bg-dark text-light" : ""}`}
+                      style={{ marginTop: "-10px" }}
+                    >
                       {course.lessons.length} Lessons
                     </p>
 
