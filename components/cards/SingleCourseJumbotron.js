@@ -1,4 +1,4 @@
-import { currencyFormatter } from "../../utils/helpers";
+import { currencyFormatter, dateFormater } from "../../utils/helpers";
 import { Badge, Modal, Button, Rate } from "antd";
 import ReactPlayer from "react-player";
 import { LoadingOutlined, SafetyOutlined } from "@ant-design/icons";
@@ -62,7 +62,10 @@ const SingleCourseJombotron = ({
               <p>Created By {instructor.name}</p>
 
               {/* updatedAt */}
-              <p>Last updated {new Date(updatedAt).toLocaleDateString()}</p>
+              <p>
+                Last updated{" "}
+                {new Date(updatedAt).toLocaleDateString("en-IN", dateFormater)}
+              </p>
 
               {/* price */}
               <h4
@@ -74,12 +77,7 @@ const SingleCourseJombotron = ({
                 }}
               >
                 {" "}
-                {paid
-                  ? currencyFormatter({
-                      amount: price,
-                      currency: "inr",
-                    })
-                  : "Free"}
+                {paid ? "₹ " + price : "Free"}
                 {/* rating */}
                 <Rate
                   style={{ marginLeft: "30px" }}

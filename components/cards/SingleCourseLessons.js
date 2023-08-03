@@ -25,7 +25,7 @@ const SingleCourseLessons = ({
             itemLayout="horizontal"
             dataSource={lessons}
             renderItem={(item, index) => {
-              console.log("item=>", item);
+              // console.log("item=>", item);
               return (
                 <List.Item>
                   <List.Item.Meta

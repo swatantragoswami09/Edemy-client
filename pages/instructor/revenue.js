@@ -42,6 +42,12 @@ const InstructorRevenue = () => {
       <div>
         <div className="row pt-2">
           <div
+            style={{
+              marginTop: "25px",
+              borderRadius: "50px",
+              backgroundImage:
+                "linear-gradient(to right, #0652C5, #BFDFD4,  #FF0000)",
+            }}
             className={`col-md-8 offset-md-2 bg-light p-5   ${
               isDarkMode ? "bg-dark" : "bg-light"
             }   ${isDarkMode ? "text-light" : "text-dark"}`}

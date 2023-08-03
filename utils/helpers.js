@@ -1,8 +1,14 @@
 //  data { currency: "", amount: '' }
 export const currencyFormatter = (data) => {
-  console.log("data=>", data);
-  return data.amount.toLocaleString(data.currency, {
-    style: "currency",
-    currency: data.currency,
-  });
+  let res = data.amount.toLocaleString(data.currency);
+  console.log("res=>", res);
+  res = res / 100; // convert into inr
+  return "₹ " + res;
+};
+
+export const dateFormater = {
+  weekday: "long",
+  year: "numeric",
+  month: "long",
+  day: "numeric",
 };

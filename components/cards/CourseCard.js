@@ -48,14 +48,7 @@ const CourseCard = ({ loading, course }) => {
               flexWrap: "wrap",
             }}
           >
-            <h4 className="pt-2">
-              {paid
-                ? currencyFormatter({
-                    amount: price,
-                    currency: "inr",
-                  })
-                : "Free"}
-            </h4>
+            <h4 className="pt-2">{paid ? "₹ " + price : "Free"}</h4>
             <Rate
               onChange={() => console.log(" start pressed")}
               allowHalf

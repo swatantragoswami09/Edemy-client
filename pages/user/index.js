@@ -40,7 +40,7 @@ const UserIndex = () => {
           className="d-flex justify-content-center display-1 text-danger p-5"
         />
       )}
-      <h1 className="jumbotron text-center square">User Dashboard</h1>
+      <h1 className="jumbotron text-center square">Courses Owned By You</h1>
       {/* show list of course */}
       {courses &&
         courses.map((course) => {

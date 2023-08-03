@@ -17,6 +17,13 @@ const UserNav = () => {
           Dashboad
         </a>
       </Link>
+      <Link href="/user/organisation">
+        <a
+          className={`nav-link ${current === "/user/organisation" && "active"}`}
+        >
+          Oraganisation
+        </a>
+      </Link>
     </div>
   );
 };

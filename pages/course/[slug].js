@@ -7,20 +7,45 @@ import { toast } from "react-toastify";
 import SingleCourseJombotron from "../../components/cards/SingleCourseJumbotron";
 import SingleCourseLessons from "../../components/cards/SingleCourseLessons";
 import { loadStripe } from "@stripe/stripe-js";
+import useNode from "../../hooks/useNode";
+import Comment from "../../components/comments/comment";
 
+const comments = {
+  id: 1,
+  items: [],
+};
 const SingleCourse = ({ course }) => {
   // state
   const [showModal, setShowModal] = useState(false);
   const [preview, setPreview] = useState("");
   const [loading, setLoading] = useState(false);
   const [enrolled, setEnrolled] = useState({});
+  const [commentsData, setCommentsData] = useState(comments);
+
+  const router = useRouter();
+  const { slug } = router.query;
+
   //   context
   const {
     state: { user },
   } = useContext(Context);
+  const { insertNode, editNode, deleteNode } = useNode();
 
-  const router = useRouter();
-  const { slug } = router.query;
+  const handleInsertNode = (folderId, item) => {
+    const finalStructure = insertNode(commentsData, folderId, item);
+    setCommentsData(finalStructure);
+  };
+
+  const handleEditNode = (folderId, value) => {
+    const finalStructure = editNode(commentsData, folderId, value);
+    setCommentsData(finalStructure);
+  };
+
+  const handleDeleteNode = (folderId) => {
+    const finalStructure = deleteNode(commentsData, folderId);
+    const temp = { ...finalStructure };
+    setCommentsData(temp);
+  };
 
   useEffect(() => {
     if (user && course) {
@@ -105,6 +130,12 @@ const SingleCourse = ({ course }) => {
           setShowModal={setShowModal}
         />
       )}
+      <Comment
+        handleInsertNode={handleInsertNode}
+        handleEditNode={handleEditNode}
+        handleDeleteNode={handleDeleteNode}
+        comment={commentsData}
+      />
     </>
   );
 };
