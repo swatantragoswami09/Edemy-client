@@ -24,7 +24,9 @@ const Register = () => {
   const { isDarkMode } = useContext(DarkModeContext);
 
   useEffect(() => {
-    if (user !== null) router.push("/");
+    if (user !== null) {
+      router.push("/");
+    }
   }, [user]);
 
   //   to get referralId from browser url
@@ -63,7 +65,10 @@ const Register = () => {
       setLoading(false);
     }
   };
-
+  // Early return if user is already logged in
+  if (user !== null) {
+    return null;
+  }
   return (
     <>
       <div
