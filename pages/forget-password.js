@@ -24,10 +24,10 @@ const ForgetPassword = () => {
   // router
   const router = useRouter();
 
-  // redirect if user is logged in
-  useEffect(() => {
-    if (user !== null) router.push("/");
-  }, [user]);
+  if (user !== null) {
+    router.push("/");
+    return null;
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();

@@ -1,4 +1,5 @@
-import { Menu, Switch } from "antd";
+import React, { useState, useEffect, useContext } from "react";
+import { Menu, Switch, Input, AutoComplete } from "antd";
 import Link from "next/link";
 import {
   BulbOutlined,
@@ -10,7 +11,6 @@ import {
   CarryOutOutlined,
   TeamOutlined,
 } from "@ant-design/icons";
-import { useEffect, useState, useContext } from "react";
 import { Context } from "../context";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -24,11 +24,10 @@ const TopNav = () => {
   const { state, dispatch } = useContext(Context);
   const { user } = state;
   const { isDarkMode, toggleDarkMode } = useContext(DarkModeContext);
-  console.log("state=>", state);
-
+  const [searchValue, setSearchValue] = useState("");
+  const [suggestedCourses, setSuggestedCourses] = useState([]);
   const router = useRouter();
 
-  // to control the body background color's toggle
   useEffect(() => {
     document.body.style.setProperty(
       "--body-background-color",
@@ -54,22 +53,78 @@ const TopNav = () => {
     router.push("/login");
   };
 
+  const handleSearchSuggestions = async (value) => {
+    if (value) {
+      try {
+        const { data } = await axios.get(`/api/courses/search/${value}`);
+        if (data.length === 0) {
+          setSuggestedCourses([
+            <div key="noResults" style={{ padding: "8px" }}>
+              No search results
+            </div>,
+          ]);
+        } else {
+          setSuggestedCourses(
+            data.map((course) => (
+              <div
+                key={course._id}
+                onClick={() => router.push(`/course/${course.slug}`)}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  cursor: "pointer",
+                  padding: "8px",
+                }}
+              >
+                <img
+                  src={course.image?.Location}
+                  alt={course.name}
+                  style={{ width: "40px", marginRight: "10px" }}
+                />
+                <div>
+                  <strong>{course.name}</strong>
+                  <br />
+                  {course.instructor.name}
+                </div>
+              </div>
+            ))
+          );
+        }
+      } catch (error) {
+        console.error("Error fetching search suggestions:", error);
+      }
+    } else {
+      setSuggestedCourses([]);
+    }
+  };
+
+  const handleSearch = () => {
+    if (searchValue) {
+      const selectedCourseName = searchValue.split("<br/>")[0].trim();
+      router.push(`/course/search/${selectedCourseName}`);
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.stopPropagation();
+      handleSearch();
+    }
+  };
   return (
     <Menu
       mode="horizontal"
       selectedKeys={[current]}
-      className={`${isDarkMode ? "bg-dark" : "bg-light"}   ${
+      className={`${isDarkMode ? "bg-dark" : "bg-light"} ${
         isDarkMode ? "text-light" : "text-dark"
       }`}
     >
       <div style={{ display: "flex", alignItems: "center" }}>
-        <Item
-          key="/"
-          onClick={(e) => setCurrent(e.key)}
-          icon={<AppstoreOutlined />}
-        >
+        <Item key="/" onClick={() => setCurrent("/")}>
           <Link href="/">
-            <a>App</a>
+            <a>
+              <AppstoreOutlined /> App
+            </a>
           </Link>
         </Item>
         {user &&
@@ -78,25 +133,26 @@ const TopNav = () => {
         user.user.role.includes("Instructor") ? (
           <Item
             key="/instructor/course/create"
-            onClick={(e) => setCurrent(e.key)}
-            icon={<CarryOutOutlined />}
+            onClick={() => setCurrent("/instructor/course/create")}
           >
             <Link href="/instructor/course/create">
-              <a>Create Course</a>
+              <a>
+                <CarryOutOutlined /> Create Course
+              </a>
             </Link>
           </Item>
         ) : (
           <Item
             key="/user/become-instructor"
-            onClick={(e) => setCurrent(e.key)}
-            icon={<TeamOutlined />}
+            onClick={() => setCurrent("/user/become-instructor")}
           >
             <Link href="/user/become-instructor">
-              <a>Become Instructor</a>
+              <a>
+                <TeamOutlined /> Become Instructor
+              </a>
             </Link>
           </Item>
         )}
-        {/* Dark mode toggle */}
         <Item key="darkModeToggle" className="dark-mode-toggle">
           <Switch
             checked={isDarkMode}
@@ -110,37 +166,47 @@ const TopNav = () => {
       <div
         style={{ display: "flex", alignItems: "center", marginLeft: "auto" }}
       >
+        <AutoComplete
+          dropdownMatchSelectWidth={252}
+          style={{ width: 300 }}
+          options={suggestedCourses.map((course) => ({ value: course }))}
+          onSearch={handleSearchSuggestions}
+          value={searchValue}
+        >
+          <Input.Search
+            size="medium"
+            placeholder="Search for a course"
+            enterButton
+            onSearch={handleSearch}
+            onKeyDown={handleKeyDown}
+            onChange={(e) => setSearchValue(e.target.value)}
+          />
+        </AutoComplete>
         {user === null ? (
           <>
-            <Item
-              key="/login"
-              onClick={(e) => setCurrent(e.key)}
-              icon={<LoginOutlined />}
-            >
+            <Item key="/login" onClick={() => setCurrent("/login")}>
               <Link href="/login">
-                <a>Login</a>
+                <a>
+                  <LoginOutlined /> Login
+                </a>
               </Link>
             </Item>
-            <Item
-              key="/register"
-              onClick={(e) => setCurrent(e.key)}
-              icon={<UserAddOutlined />}
-            >
+            <Item key="/register" onClick={() => setCurrent("/register")}>
               <Link href="/register">
-                <a>Register</a>
+                <a>
+                  <UserAddOutlined /> Register
+                </a>
               </Link>
             </Item>
           </>
         ) : (
           <>
             {user.user.role && user.user.role.includes("Instructor") && (
-              <Item
-                key="/instructor"
-                onClick={(e) => setCurrent(e.key)}
-                icon={<TeamOutlined />}
-              >
+              <Item key="/instructor" onClick={() => setCurrent("/instructor")}>
                 <Link href="/instructor">
-                  <a>Instructor</a>
+                  <a>
+                    <TeamOutlined /> Instructor
+                  </a>
                 </Link>
               </Item>
             )}
@@ -160,7 +226,9 @@ const TopNav = () => {
                     <a>Settings</a>
                   </Link>
                 </Item>
-                <Item onClick={logout}>Logout</Item>
+                <Item onClick={logout}>
+                  <LogoutOutlined /> Logout
+                </Item>
               </ItemGroup>
             </SubMenu>
           </>

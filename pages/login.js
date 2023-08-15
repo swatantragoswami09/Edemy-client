@@ -25,9 +25,10 @@ const Login = () => {
   // router
   const router = useRouter();
 
-  useEffect(() => {
-    if (user !== null) router.push("/");
-  }, [user]);
+  if (user !== null) {
+    router.push("/");
+    return null;
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
