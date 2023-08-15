@@ -45,19 +45,23 @@ const InstructorRevenue = () => {
             style={{
               marginTop: "25px",
               borderRadius: "50px",
-              backgroundImage:
-                "linear-gradient(to right, #0652C5, #BFDFD4,  #FF0000)",
+              backgroundImage: "linear-gradient(to right,  #0652C5, #000000)",
             }}
             className={`col-md-8 offset-md-2 bg-light p-5   ${
               isDarkMode ? "bg-dark" : "bg-light"
-            }   ${isDarkMode ? "text-light" : "text-dark"}`}
+            }   ${isDarkMode ? "text-light" : "text-light"}`}
           >
-            <h2 style={{ display: "flex", justifyContent: "space-between" }}>
+            <h2
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+              }}
+            >
               Revenue report
               <DollarOutlined
                 className={` float-right  ${
-                  isDarkMode ? "text-light" : "text-dark"
-                }`}
+                  isDarkMode ? "text-light" : "text-light"
+                } `}
               />
             </h2>
             <small>
@@ -66,7 +70,12 @@ const InstructorRevenue = () => {
             </small>
             <hr />
             {/* {JSON.stringify(balance, null, 4)} */}
-            <h4 style={{ display: "flex", justifyContent: "space-between" }}>
+            <h4
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+              }}
+            >
               Pending balance{" "}
               {balance.pending &&
                 balance.pending.map((bp, i) => {

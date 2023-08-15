@@ -1,4 +1,9 @@
-import { SyncOutlined, SettingOutlined, EditOutlined } from "@ant-design/icons";
+import {
+  SyncOutlined,
+  SettingOutlined,
+  EditOutlined,
+  CopyOutlined,
+} from "@ant-design/icons";
 import React, { useContext, useState, useEffect } from "react";
 import { DarkModeContext } from "../../context/DarkModeContext";
 import { Context } from "../../context";
@@ -119,36 +124,40 @@ const Settings = () => {
                   marginTop: "25px",
                   borderRadius: "50px",
                   backgroundImage:
-                    "linear-gradient(to right, #0652C5, #BFDFD4, #FF0000)",
+                    "linear-gradient(to right,  #0652C5, #000000)",
                 }}
                 className={`col-md-8 offset-md-2 bg-light p-5   ${
                   isDarkMode ? "bg-dark" : "bg-light"
-                }   ${isDarkMode ? "text-light" : "text-dark"}`}
+                }   ${isDarkMode ? "text-light" : "text-light"}`}
               >
                 {/* Setting heading and icon */}
                 <h2
-                  style={{ display: "flex", justifyContent: "space-between" }}
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                  }}
                 >
                   Setting
                   <div>
-                    <SettingOutlined
-                      className={` float-right  ${
-                        isDarkMode ? "text-light" : "text-dark"
-                      }`}
-                    />
+                    <SettingOutlined className={` float-right `} />
                     <EditOutlined onClick={showModal} />
                   </div>
                 </h2>
 
                 {/* referral Id */}
                 <h2
-                  style={{ display: "flex", justifyContent: "space-between" }}
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                  }}
                 >
                   Referral Id
                   <div>
                     <Button
                       type="primary"
+                      style={{ background: "lightgreen", color: "black" }}
                       onClick={() => copyToClipboard(referrals)}
+                      icon={<CopyOutlined />}
                     >
                       copy
                     </Button>
@@ -160,7 +169,10 @@ const Settings = () => {
 
                 {/* Username */}
                 <h2
-                  style={{ display: "flex", justifyContent: "space-between" }}
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                  }}
                 >
                   UserName
                   <div>{user?.user?.name} </div>
@@ -169,7 +181,10 @@ const Settings = () => {
 
                 {/* email */}
                 <h2
-                  style={{ display: "flex", justifyContent: "space-between" }}
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                  }}
                 >
                   Email
                   <div>{user?.user?.email} </div>
@@ -178,34 +193,46 @@ const Settings = () => {
 
                 {/* Password */}
                 <h2
-                  style={{ display: "flex", justifyContent: "space-between" }}
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                  }}
                 >
                   Password
                   <div>Swatantra@123</div>
                 </h2>
-                <hr />
+                <hr style={{ color: "white" }} />
 
                 {/* Total Team members */}
                 <h2
-                  style={{ display: "flex", justifyContent: "space-between" }}
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                  }}
                 >
                   Total Team Size
                   <div>500 </div>
                 </h2>
-                <hr />
+                <hr style={{ color: "white" }} />
 
                 {/* Total BV */}
                 <h2
-                  style={{ display: "flex", justifyContent: "space-between" }}
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                  }}
                 >
                   Total BV
                   <div>3500 BV </div>
                 </h2>
-                <hr />
+                <hr style={{ color: "white" }} />
 
                 {/* Stripe account */}
                 <h2
-                  style={{ display: "flex", justifyContent: "space-between" }}
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                  }}
                 >
                   Stripe Account Id
                   <div>{user && user.user.stripe_account_id} </div>

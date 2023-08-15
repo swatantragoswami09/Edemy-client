@@ -40,8 +40,8 @@ const Comment = ({
   };
 
   return (
-    <div>
-      <div>
+    <>
+      <div className="row" style={{ backgroundClip: "blue" }}>
         {comment.id === 1 ? (
           <>
             <input
@@ -64,7 +64,7 @@ const Comment = ({
               contentEditable={editMode}
               suppressContentEditableWarning={editMode}
               ref={inputRef}
-              style={{ wordWrap: "break-word" }}
+              style={{ wordWrap: "break-word", backgroundColor: "purple" }}
             >
               {comment.name}
             </span>
@@ -73,6 +73,7 @@ const Comment = ({
               style={{
                 display: "flex",
                 marginTop: "5px",
+                backgroundColor: "pink",
               }}
             >
               {editMode ? (
@@ -95,20 +96,21 @@ const Comment = ({
               ) : (
                 <>
                   <Action
-                    className="reply"
-                    type="REPLY"
+                    // className="reply"
+                    type="REPLY "
                     handleClick={handleNewComment}
                   />
+
                   <Action
-                    className="reply"
-                    type="EDIT"
+                    // className="reply"
+                    type="EDIT "
                     handleClick={() => {
                       setEditMode(true);
                     }}
                   />
                   <Action
-                    className="reply"
-                    type="DELETE"
+                    // className="reply"
+                    type="DELETE "
                     handleClick={handleDelete}
                   />
                 </>
@@ -116,9 +118,6 @@ const Comment = ({
             </div>
           </>
         )}
-      </div>
-
-      <div style={{ display: expand ? "block" : "none", paddingLeft: 25 }}>
         {showInput && (
           <div>
             <input
@@ -137,7 +136,6 @@ const Comment = ({
             />
           </div>
         )}
-
         {comment?.items?.map((cmnt) => {
           return (
             <Comment
@@ -150,7 +148,7 @@ const Comment = ({
           );
         })}
       </div>
-    </div>
+    </>
   );
 };
 

@@ -8,9 +8,9 @@ import { useRouter } from "next/router";
 import { DarkModeContext } from "../../context/DarkModeContext";
 
 const Register = () => {
-  const [name, setName] = useState("swatantra");
-  const [email, setEmail] = useState("swatantragoswami09@gmail.com");
-  const [password, setPassword] = useState("Swatantra@123");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [referralId, setReferralId] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -114,6 +114,7 @@ const Register = () => {
                 value={referralId}
                 placeholder={referralId}
                 onChange={(e) => setReferralId(e.target.value)}
+                disabled="disabled"
               />
             )}
             <button

@@ -130,12 +130,19 @@ const SingleCourse = ({ course }) => {
           setShowModal={setShowModal}
         />
       )}
-      <Comment
-        handleInsertNode={handleInsertNode}
-        handleEditNode={handleEditNode}
-        handleDeleteNode={handleDeleteNode}
-        comment={commentsData}
-      />
+      <div
+        style={{
+          padding: "0px 120px",
+          marginTop: "80px",
+        }}
+      >
+        <Comment
+          handleInsertNode={handleInsertNode}
+          handleEditNode={handleEditNode}
+          handleDeleteNode={handleDeleteNode}
+          comment={commentsData}
+        />
+      </div>
     </>
   );
 };

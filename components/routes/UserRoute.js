@@ -10,7 +10,7 @@ import UserNav from "../nav/UserNav";
 // E-> Ethics
 // yeh mat bhoolna tony stark ne bhi iron man patharo ke beech banaya tha
 
-const UserRoute = ({ children, showNav=true }) => {
+const UserRoute = ({ children, showNav = true }) => {
   const [ok, setOk] = useState(false);
   const router = useRouter();
 
@@ -39,9 +39,7 @@ const UserRoute = ({ children, showNav=true }) => {
       ) : (
         <div className="container-fluid">
           <div className="row">
-            <div className="col-md-2">
-             {showNav &&  <UserNav />}
-            </div>
+            <div className="col-md-2">{showNav && <UserNav />}</div>
 
             <div className="col-md-10">{children}</div>
           </div>

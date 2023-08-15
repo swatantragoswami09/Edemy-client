@@ -3,7 +3,11 @@ import React from "react";
 
 const Action = ({ handleClick, type, className }) => {
   return (
-    <div className={className} onClick={handleClick}>
+    <div
+      className={className}
+      onClick={handleClick}
+      style={{ backgroundColor: "red" }}
+    >
       {type}
     </div>
   );

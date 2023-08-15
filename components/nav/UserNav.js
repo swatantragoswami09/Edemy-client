@@ -24,6 +24,13 @@ const UserNav = () => {
           Oraganisation
         </a>
       </Link>
+      <Link href="/user/transactions">
+        <a
+          className={`nav-link ${current === "/user/transactions" && "active"}`}
+        >
+          Transactions
+        </a>
+      </Link>
     </div>
   );
 };

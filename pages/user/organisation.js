@@ -4,6 +4,7 @@ import { Context } from "../../context/index";
 import { DarkModeContext } from "../../context/DarkModeContext";
 import { Tree, Card } from "antd";
 import { UserOutlined } from "@ant-design/icons";
+import UserRoute from "../../components/routes/UserRoute";
 
 const Organisation = () => {
   const {
@@ -87,26 +88,17 @@ const Organisation = () => {
   }, [mainUser, mainUserId]);
 
   return (
-    <>
-      <div>
-        <div className="row pt-2">
-          <div
-            className={`col-md-8 offset-md-2 p-5 ${
-              isDarkMode ? "bg-dark text-light" : "bg-light text-dark"
-            }`}
-          >
-            <Card title="Referrals Structure">
-              <Tree
-                showLine
-                expandedKeys={expandedKeys}
-                onExpand={setExpandedKeys}
-                treeData={treeData}
-              />
-            </Card>
-          </div>
-        </div>
-      </div>
-    </>
+    <UserRoute>
+      <h1 className="jumbotron text-center square">Your Organisation</h1>
+      <Card title="Your Team">
+        <Tree
+          showLine
+          expandedKeys={expandedKeys}
+          onExpand={setExpandedKeys}
+          treeData={treeData}
+        />
+      </Card>
+    </UserRoute>
   );
 };
 

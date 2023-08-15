@@ -8,19 +8,14 @@ import { DarkModeContext } from "../context/DarkModeContext";
 import { useRouter } from "next/router";
 
 const Login = () => {
-  const [email, setEmail] = useState("swatantragoswami09@gmail.com");
-  const [password, setPassword] = useState("Swatantra@123");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
   // state
   const { state, dispatch } = useContext(Context);
   const { user } = state;
-
   const { isDarkMode } = useContext(DarkModeContext);
-
-  console.log("login.js", isDarkMode);
-
-  console.log("state=>", state);
 
   // router
   const router = useRouter();

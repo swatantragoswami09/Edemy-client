@@ -9,6 +9,7 @@ import {
   UserAddOutlined,
   CarryOutOutlined,
   TeamOutlined,
+  AlignRightOutlined,
 } from "@ant-design/icons";
 import { useEffect, useState, useContext } from "react";
 import { Context } from "../context";
@@ -24,7 +25,6 @@ const TopNav = () => {
   const { state, dispatch } = useContext(Context);
   const { user } = state;
   const { isDarkMode, toggleDarkMode } = useContext(DarkModeContext);
-  console.log("state=>", state);
 
   const router = useRouter();
 
@@ -110,6 +110,15 @@ const TopNav = () => {
       <div
         style={{ display: "flex", alignItems: "center", marginLeft: "auto" }}
       >
+        <Item
+          key="/about"
+          onClick={(e) => console.log("about")}
+          icon={<AlignRightOutlined />}
+        >
+          <Link href="/about">
+            <a>About</a>
+          </Link>
+        </Item>
         {user === null ? (
           <>
             <Item
@@ -133,7 +142,7 @@ const TopNav = () => {
           </>
         ) : (
           <>
-            {user.user.role && user.user.role.includes("Instructor") && (
+            {user?.user?.role && user?.user?.role.includes("Instructor") && (
               <Item
                 key="/instructor"
                 onClick={(e) => setCurrent(e.key)}
@@ -146,7 +155,7 @@ const TopNav = () => {
             )}
             <SubMenu
               icon={<CoffeeOutlined />}
-              title={user.user && user.user.name}
+              title={user?.user && user?.user?.name}
               className="float-right"
             >
               <ItemGroup>
