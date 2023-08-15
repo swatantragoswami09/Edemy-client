@@ -24,18 +24,11 @@ const Register = () => {
   const { isDarkMode } = useContext(DarkModeContext);
 
   useEffect(() => {
-    if (user !== null) {
-      router.push("/");
-    }
-  }, [user]);
-
-  //   to get referralId from browser url
-  useEffect(() => {
     const referralIdFromURL = window.location.pathname.replace(
       "/register/",
       ""
     );
-    setReferralId(referralIdFromURL); // Set referralId state with the value
+    setReferralId(referralIdFromURL);
   }, []);
 
   const handleSubmit = async (e) => {
@@ -56,19 +49,14 @@ const Register = () => {
       setLoading(false);
     } catch (error) {
       if (error.response.data) {
-        // if error response is presesnt
         toast.error(error.response.data);
       } else {
-        // If the error response is not present, display a generic error message
         toast.error("An error occurred. Please try again later.");
       }
       setLoading(false);
     }
   };
-  // Early return if user is already logged in
-  if (user !== null) {
-    return null;
-  }
+
   return (
     <>
       <div
@@ -104,7 +92,6 @@ const Register = () => {
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter password"
             />
-            {/* Display the referral id input field only if referralId is present */}
             {referralId && (
               <input
                 type="text"
