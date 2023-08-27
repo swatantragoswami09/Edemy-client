@@ -217,7 +217,8 @@ const TopNav = () => {
                 key="/instructor"
                 onClick={(e) => setCurrent(e.key)}
                 icon={<TeamOutlined />}
-              >
+              ></Item>
+            )}
             {user.user.role && user.user.role.includes("Instructor") && (
               <Item key="/instructor" onClick={() => setCurrent("/instructor")}>
                 <Link href="/instructor">
@@ -250,7 +251,6 @@ const TopNav = () => {
             </SubMenu>
           </>
         )}
-        </>)}
       </div>
     </Menu>
   );

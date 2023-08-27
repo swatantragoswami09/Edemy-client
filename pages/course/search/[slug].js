@@ -34,22 +34,16 @@ const FilteredCourses = () => {
   }, [router.query]);
 
   return (
-    <div className={`bg-${isDarkMode ? "dark" : "light"}`}>
-      <div className="container ">
+    <>
+      <div
+        className={`container-fluid ${isDarkMode ? "bg-dark" : "bg-light"} `}
+      >
         {courses.length === 0 ? (
-          <h1
-            className={`jumbotron text-center  ${
-              isDarkMode ? "text-light" : ""
-            }  `}
-          >
+          <h1 className="jumbotron text-center bg-primary square">
             Course Not Found
           </h1>
         ) : (
-          <h1
-            className={`jumbotron text-center  ${
-              isDarkMode ? "text-light" : ""
-            }  `}
-          >
+          <h1 className="jumbotron text-center bg-primary square">
             Result's Found
           </h1>
         )}
@@ -65,7 +59,7 @@ const FilteredCourses = () => {
           ))}
         </Row>
       </div>
-    </div>
+    </>
   );
 };
 
