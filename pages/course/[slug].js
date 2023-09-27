@@ -10,6 +10,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import useNode from "../../hooks/useNode";
 
 import SingleComment from "../../components/comments/SingleComment";
+import { getCourseBySlug } from "../API";
 // import Comments from "../../components/comments/Comment";
 
 const comments = {
@@ -33,6 +34,8 @@ const SingleCourse = ({ course }) => {
   } = useContext(Context);
   const { insertNode, editNode, deleteNode } = useNode();
 
+  console.log("slug=>", slug);
+
   useEffect(() => {
     if (user && course) {
       checkEnrollment();
@@ -48,17 +51,17 @@ const SingleCourse = ({ course }) => {
   const handlePaidEnrollment = async () => {
     try {
       setLoading(true);
-      // check if user is logged in
-      if (!user) router.push("/login");
 
       // check if already enrolled
       if (enrolled.status) {
         return router.push(`/user/course/${enrolled.course.slug}`);
       }
-
       const { data } = await axios.post(`/api/paid-enrollment/${course._id}`);
       const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_KEY);
       stripe.redirectToCheckout({ sessionId: data });
+
+      // check if user is logged in
+      if (!user) router.push("/login");
     } catch (error) {
       console.log(error);
       toast("Enrollment failed, Try again.");
@@ -129,10 +132,10 @@ const SingleCourse = ({ course }) => {
 };
 
 export async function getServerSideProps({ query }) {
-  const { data } = await axios.get(`${process.env.API}/course/${query.slug}`);
+  const data = await getCourseBySlug(query);
   return {
     props: {
-      course: data,
+      course: data.course,
     },
   };
 }

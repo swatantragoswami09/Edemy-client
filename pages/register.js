@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Context } from "../context";
 import { useRouter } from "next/router";
 import { DarkModeContext } from "../context/DarkModeContext";
+import { registerUserApi } from "./API";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -29,21 +30,15 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.table({ name, email, password });
-
     try {
       setLoading(true);
-      const { data } = await axios.post(`/api/register`, {
-        name,
-        email,
-        password,
-      });
-
+      const data = await registerUserApi(name, email, password);
       toast.success("Registration Successful. Please login.");
       setName("");
       setEmail("");
       setPassword("");
       setLoading(false);
+      router.push("/login");
     } catch (error) {
       toast.error(error.response.data);
       setLoading(false);

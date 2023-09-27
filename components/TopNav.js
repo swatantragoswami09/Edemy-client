@@ -11,12 +11,14 @@ import {
   CarryOutOutlined,
   TeamOutlined,
   AlignRightOutlined,
+  QuestionCircleOutlined,
 } from "@ant-design/icons";
 import { Context } from "../context";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import { DarkModeContext } from "../context/DarkModeContext";
+import { logoutApi, searchCourseApi } from "../pages/API";
 
 const { Item, SubMenu, ItemGroup } = Menu;
 
@@ -50,7 +52,7 @@ const TopNav = () => {
       type: "LOGOUT",
     });
     window.localStorage.removeItem("user");
-    const { data } = await axios.get("/api/logout");
+    const data = await logoutApi();
     toast(data.message);
     router.push("/login");
   };
@@ -58,7 +60,7 @@ const TopNav = () => {
   const handleSearchSuggestions = async (value) => {
     if (value) {
       try {
-        const { data } = await axios.get(`/api/courses/search/${value}`);
+        const data = await searchCourseApi(value);
         if (data.length === 0) {
           setSuggestedCourses([
             <div key="noResults" style={{ padding: "8px" }}>
@@ -168,6 +170,15 @@ const TopNav = () => {
       <div
         style={{ display: "flex", alignItems: "center", marginLeft: "auto" }}
       >
+        <Item
+          key="/FAQ"
+          onClick={(e) => console.log("about")}
+          icon={<QuestionCircleOutlined />}
+        >
+          <Link href="/FAQ">
+            <a>FAQ</a>
+          </Link>
+        </Item>
         <Item
           key="/about"
           onClick={(e) => console.log("about")}

@@ -6,6 +6,7 @@ import { Avatar } from "antd";
 import Link from "next/link";
 import { SyncOutlined, PlayCircleOutlined } from "@ant-design/icons";
 import { DarkModeContext } from "../../context/DarkModeContext";
+import { getUserAllOwnedCourses } from "../API";
 
 const UserIndex = () => {
   const [courses, setCourses] = useState([]);
@@ -24,7 +25,7 @@ const UserIndex = () => {
   const loadCourses = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get("/api/user-courses");
+      const data = await getUserAllOwnedCourses();
       setCourses(data);
       setLoading(false);
     } catch (error) {
@@ -40,7 +41,9 @@ const UserIndex = () => {
           className="d-flex justify-content-center display-1 text-danger p-5"
         />
       )}
-      <h1 className="jumbotron text-center square">Courses Owned By You</h1>
+      <h1 className="jumbotron text-center square">
+        👨‍🏫📚 Courses Owned By You
+      </h1>
       {/* show list of course */}
       {courses &&
         courses.map((course) => {

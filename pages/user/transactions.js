@@ -4,6 +4,7 @@ import { Table, Tag } from "antd";
 import axios from "axios";
 import { currencyFormatter, columns, dateFormater } from "../../utils/helpers";
 import { Context } from "../../context";
+import { allTransactionApi } from "../API";
 
 const Transaction = () => {
   const [dataSource, setDataSource] = useState([]);
@@ -11,12 +12,12 @@ const Transaction = () => {
   // state
   const { state, dispatch } = useContext(Context);
   const { user } = state;
-  // console.log("user.user.courses", user.user.courses);
+
   useEffect(() => {
     const getTransactionDetails = async () => {
       try {
-        const res = await axios.get("/api/all-transactions");
-        const transactionsData = res.data.data.map((item) => ({
+        const data = await allTransactionApi();
+        const transactionsData = data.paymentIntents.data.map((item) => ({
           course: "SKG course details",
           amount: currencyFormatter(item),
           created: new Date(item.created * 1000).toLocaleDateString(

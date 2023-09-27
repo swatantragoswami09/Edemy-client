@@ -6,6 +6,7 @@ import { SyncOutlined } from "@ant-design/icons";
 import { Context } from "../context";
 import { DarkModeContext } from "../context/DarkModeContext";
 import { useRouter } from "next/router";
+import { loginUserApi } from "./API";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -27,14 +28,9 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.table({ name, email, password });
-
     try {
       setLoading(true);
-      const { data } = await axios.post(`/api/login`, {
-        email,
-        password,
-      });
+      const data = await loginUserApi(email, password);
       dispatch({
         type: "LOGIN",
         payload: data,

@@ -3,6 +3,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { SyncOutlined } from "@ant-design/icons";
 import InstructorNav from "../nav/InstructorNav";
+import { getCurrentInstructor } from "../../pages/API";
 
 // E-> Education
 // E-> Examination
@@ -16,8 +17,7 @@ const InstructorRoute = ({ children }) => {
 
   const fetchInstructor = async () => {
     try {
-      const { data } = await axios.get("/api/current-instructor");
-      console.log("data=>", data);
+      const data = await getCurrentInstructor();
       if (data.ok) setOk(true);
     } catch (error) {
       console.log(error);

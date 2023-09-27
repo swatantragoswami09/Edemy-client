@@ -1,6 +1,7 @@
 import { SyncOutlined } from "@ant-design/icons";
 import AboutNav from "../nav/AboutNav";
 import { useState } from "react";
+import FAQ from "../nav/FAQ";
 
 // E-> Education
 // E-> Examination
@@ -8,7 +9,7 @@ import { useState } from "react";
 // E-> Ethics
 // yeh mat bhoolna tony stark ne bhi iron man patharo ke beech banaya tha
 
-const AboutRoute = ({ children }) => {
+const FAQRoute = ({ children }) => {
   const [ok, setOk] = useState(true);
 
   return (
@@ -22,7 +23,7 @@ const AboutRoute = ({ children }) => {
         <div className="container-fluid">
           <div className="row">
             <div className="col-md-2">
-              <AboutNav />
+              <FAQ />
             </div>
 
             <div className="col-md-10">{children}</div>
@@ -33,4 +34,4 @@ const AboutRoute = ({ children }) => {
   );
 };
 
-export default AboutRoute;
+export default FAQRoute;

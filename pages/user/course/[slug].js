@@ -13,6 +13,7 @@ import {
   MinusCircleFilled,
 } from "@ant-design/icons";
 import { DarkModeContext } from "../../../context/DarkModeContext";
+import { getUserCoursesBySlug } from "../../API";
 
 const SingleCourse = () => {
   const [clicked, setClicked] = useState(-1);
@@ -40,9 +41,9 @@ const SingleCourse = () => {
 
   const loadCourse = async () => {
     try {
-      const { data } = await axios.get(`/api/user/course/${slug}`);
+      const data = await getUserCoursesBySlug(slug);
       console.log("res data=>", data);
-      setCourse(data);
+      setCourse(data.course);
     } catch (error) {
       console.log(error);
     }

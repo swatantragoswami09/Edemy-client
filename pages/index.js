@@ -3,6 +3,7 @@ import CourseCard from "../components/cards/CourseCard";
 import { useContext, useEffect } from "react";
 import { DarkModeContext } from "../context/DarkModeContext";
 import { useState } from "react";
+import { getAllCourses } from "./API";
 
 const Index = ({ courses }) => {
   const { isDarkMode } = useContext(DarkModeContext);
@@ -22,7 +23,10 @@ const Index = ({ courses }) => {
         className="jumbotron text-center bg-primary "
         style={{ fontSize: "70px" }}
       >
-        SKG University
+        🌟 SKG University
+        <h5 style={{ fontSize: "22px" }}>
+          Learn form the TOP IT professionals
+        </h5>
       </h1>
       <div
         className={`container-fluid ${isDarkMode ? "text-light" : ""}  ${
@@ -49,10 +53,10 @@ const Index = ({ courses }) => {
 };
 
 export async function getServerSideProps() {
-  const { data } = await axios.get(`${process.env.API}/courses`);
+  const data = await getAllCourses();
   return {
     props: {
-      courses: data,
+      courses: data.all,
     },
   };
 }

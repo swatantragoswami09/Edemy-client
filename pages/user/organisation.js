@@ -5,6 +5,7 @@ import { DarkModeContext } from "../../context/DarkModeContext";
 import { Tree, Card } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import UserRoute from "../../components/routes/UserRoute";
+import { getReferralByIdApi } from "../API";
 
 const Organisation = () => {
   const {
@@ -21,9 +22,7 @@ const Organisation = () => {
   // Recursive Tree Function
   const tree = async (user, userId) => {
     try {
-      const res = await axios.post("/api/getReferralsById", {
-        userId: userId,
-      });
+      const res = await getReferralByIdApi(userId);
 
       // Check if data exists
       if (res?.data?.user?.length > 0) {
@@ -89,7 +88,7 @@ const Organisation = () => {
 
   return (
     <UserRoute>
-      <h1 className="jumbotron text-center square">Your Organisation</h1>
+      <h1 className="jumbotron text-center square">🏛️ Your Organisation</h1>
       <Card title="Your Team">
         <Tree
           showLine

@@ -12,9 +12,10 @@ import { useRouter } from "next/router";
 import copy from "copy-to-clipboard";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { getReferralByIdApi } from "../API";
 
 const Settings = () => {
-  const [name, setName] = useState("swatantra");
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [referrals, setReferrals] = useState();
   const [loading, setLoading] = useState(true);
@@ -25,17 +26,13 @@ const Settings = () => {
   } = useContext(Context);
   const router = useRouter();
 
-  useEffect(() => {
+  useEffect(async () => {
     if (user === null) router.push("/");
-    axios
-      .post(`/api/getReferralsById`, {
-        userId: user?.user?._id,
-      })
-      .then((response) => {
-        setReferrals(
-          response.data.user[0] && response?.data?.user[0]?.referralLink
-        );
-      });
+
+    const response = await getReferralByIdApi(user?.user?._id);
+    setReferrals(
+      response.data.user[0] && response?.data?.user[0]?.referralLink
+    );
     setLoading((prev) => !prev);
   }, []);
   const showModal = () => {
@@ -50,6 +47,7 @@ const Settings = () => {
   const handleUpdateUserNameSubmit = (event) => {
     event.preventDefault();
     console.log("name=>", name);
+    console.log("name=>", email);
     console.log("hi there");
     //  need to call the update API
   };

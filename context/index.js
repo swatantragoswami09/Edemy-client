@@ -1,6 +1,7 @@
 import { useReducer, createContext, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
+import { getCsrfTokenApi } from "../pages/API";
 
 // intial state
 const initialState = {
@@ -68,7 +69,7 @@ const Provider = ({ children }) => {
 
   useEffect(() => {
     const getCsrfToken = async () => {
-      const { data } = await axios.get("/api/csrf-token");
+      const data = await getCsrfTokenApi();
       axios.defaults.headers["X-CSRF-Token"] = data.getCsrfToken;
     };
     getCsrfToken();

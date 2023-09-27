@@ -31,6 +31,15 @@ const UserNav = () => {
           Transactions
         </a>
       </Link>
+      <Link href="/user/user-refferal-revenue">
+        <a
+          className={`nav-link ${
+            current === "/user/user-refferal-revenue" && "active"
+          }`}
+        >
+          Refferal Revenue
+        </a>
+      </Link>
     </div>
   );
 };

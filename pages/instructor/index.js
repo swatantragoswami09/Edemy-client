@@ -4,6 +4,7 @@ import InstructorRoute from "../../components/routes/InstructorRoute";
 import { Avatar, Tooltip } from "antd";
 import Link from "next/link";
 import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
+import { getInstructorAllCourses } from "../API";
 const InstructorIndex = () => {
   const [courses, setCourses] = useState([]);
 
@@ -12,7 +13,7 @@ const InstructorIndex = () => {
   }, []);
 
   const loadCourses = async () => {
-    const { data } = await axios.get("/api/instructor-courses");
+    const data = await getInstructorAllCourses();
     setCourses(data);
   };
   const myStyle = { marginTop: "-15px", fontSize: "20px" };

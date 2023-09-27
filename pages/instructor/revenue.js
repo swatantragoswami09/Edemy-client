@@ -11,6 +11,7 @@ import {
 import { DarkModeContext } from "../../context/DarkModeContext";
 
 import { currency, currencyFormatter } from "../../utils/helpers";
+import { instructorBalanceApi } from "../API";
 
 const InstructorRevenue = () => {
   const [balance, setBalance] = useState({ pending: [] });
@@ -22,7 +23,7 @@ const InstructorRevenue = () => {
     sendBalanceRequest();
   }, []);
   const sendBalanceRequest = async () => {
-    const { data } = await axios.get("/api/instructor/balance");
+    const data = await instructorBalanceApi();
     setBalance(data);
   };
   const handlePayoutSettings = async () => {

@@ -2,6 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { SyncOutlined } from "@ant-design/icons";
+import { currentUserApi } from "../../pages/API";
 
 // E-> Education
 // E-> Examination
@@ -15,8 +16,7 @@ const StudentRoute = ({ children, showNav = true }) => {
 
   const fetchUser = async () => {
     try {
-      const { data } = await axios.get("/api/current-user");
-      console.log("data=>", data);
+      const data = await currentUserApi();
       if (data.ok) setOk(true);
     } catch (error) {
       console.log(error);

@@ -2,8 +2,10 @@ import { currencyFormatter, dateFormater } from "../../utils/helpers";
 import { Badge, Modal, Button, Rate } from "antd";
 import ReactPlayer from "react-player";
 import { LoadingOutlined, SafetyOutlined } from "@ant-design/icons";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { DarkModeContext } from "../../context/DarkModeContext";
+import { addReviewApi } from "../../pages/API";
+import { toast } from "react-toastify";
 
 const SingleCourseJombotron = ({
   course,
@@ -30,7 +32,16 @@ const SingleCourseJombotron = ({
     paid,
     category,
     instructor,
+    rating,
   } = course;
+  console.log(user);
+
+  const reviewHandle = async (userRating, userId, courseId) => {
+    console.log(userRating, userId, courseId);
+    const data = await addReviewApi(userRating, userId, courseId);
+    toast.success(data.message);
+    console.log(data);
+  };
 
   return (
     <div
@@ -79,12 +90,23 @@ const SingleCourseJombotron = ({
                 {" "}
                 {paid ? "₹ " + price : "Free"}
                 {/* rating */}
-                <Rate
-                  style={{ marginLeft: "30px" }}
-                  onChange={() => console.log(" start pressed")}
-                  allowHalf
-                  defaultValue={3.5}
-                />
+                {user?.user?._id !== null ? (
+                  <Rate
+                    style={{ marginLeft: "30px" }}
+                    onChange={(userRating) =>
+                      reviewHandle(userRating, user?.user?._id, course._id)
+                    }
+                    allowHalf
+                    defaultValue={rating}
+                  />
+                ) : (
+                  <Rate
+                    style={{ marginLeft: "30px" }}
+                    onChange={() => console.log("this should be login first")}
+                    allowHalf
+                    defaultValue={4.5}
+                  />
+                )}
               </h4>
             </div>
             <div className="col-md-4">
