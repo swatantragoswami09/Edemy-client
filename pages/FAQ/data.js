@@ -1,5 +1,3 @@
-import Image from "next/image";
-// import google from "../../assets/google.png";
 export const data = [
   {
     key: "1",

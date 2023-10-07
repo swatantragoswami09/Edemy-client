@@ -1,11 +1,9 @@
 import { useState, useEffect, useContext } from "react";
-import { Context } from "../../context";
 import InstructorRoute from "../../components/routes/InstructorRoute";
 import axios from "axios";
 import {
   DollarOutlined,
   SettingOutlined,
-  LoadingOutlined,
   SyncOutlined,
 } from "@ant-design/icons";
 import { DarkModeContext } from "../../context/DarkModeContext";
@@ -38,8 +36,8 @@ const InstructorRevenue = () => {
       alert("Unable to access payout settings. Try later.");
     }
   };
-  return (
-    <InstructorRoute>
+  const card = (balance, loading) => {
+    return (
       <div>
         <div className="row pt-2">
           <div
@@ -106,6 +104,13 @@ const InstructorRevenue = () => {
           </div>
         </div>
       </div>
+    );
+  };
+
+  return (
+    <InstructorRoute>
+      {/* card */}
+      {card(balance, loading)}
     </InstructorRoute>
   );
 };

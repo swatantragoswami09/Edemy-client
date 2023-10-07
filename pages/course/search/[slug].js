@@ -33,11 +33,9 @@ const FilteredCourses = () => {
     }
   }, [router.query]);
 
-  return (
-    <>
-      <div
-        className={`container-fluid ${isDarkMode ? "bg-dark" : "bg-light"} `}
-      >
+  const header = (courses) => {
+    return (
+      <>
         {courses.length === 0 ? (
           <h1 className="jumbotron text-center bg-primary square">
             Course Not Found
@@ -47,17 +45,35 @@ const FilteredCourses = () => {
             Result's Found
           </h1>
         )}
-        <Row gutter={[16, 16]}>
-          {" "}
-          {/* Set gutter spacing between columns */}
-          {courses.map((course) => (
-            <Col key={course._id} xs={24} sm={12} md={8} lg={6}>
-              {" "}
-              {/* Define column span for different screen sizes */}
-              <CourseCard course={course} loading={false} />
-            </Col>
-          ))}
-        </Row>
+      </>
+    );
+  };
+  const searchResult = (courses) => {
+    return (
+      <Row gutter={[16, 16]}>
+        {" "}
+        {/* Set gutter spacing between columns */}
+        {courses.map((course) => (
+          <Col key={course._id} xs={24} sm={12} md={8} lg={6}>
+            {" "}
+            {/* Define column span for different screen sizes */}
+            <CourseCard course={course} loading={false} />
+          </Col>
+        ))}
+      </Row>
+    );
+  };
+
+  return (
+    <>
+      <div
+        className={`container-fluid ${isDarkMode ? "bg-dark" : "bg-light"} `}
+      >
+        {/* header */}
+        {header(courses)}
+
+        {/* search result */}
+        {searchResult(courses)}
       </div>
     </>
   );

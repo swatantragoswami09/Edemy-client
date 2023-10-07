@@ -104,143 +104,154 @@ const Settings = () => {
     copy(copyText);
     toast(`You have copied "${copyText}"`);
   };
-  return (
-    <>
-      {modalPreview(isModalOpen)}
-      {loading ? (
-        <SyncOutlined
-          spin
-          className="d-flex justify-content-center display-1 text-danger p-5"
-        />
-      ) : (
-        <>
-          {/* modal preview */}
-          <div>
-            <div className="row pt-2">
-              <div
-                style={{
-                  marginTop: "25px",
-                  borderRadius: "50px",
-                  backgroundImage:
-                    "linear-gradient(to right,  #0652C5, #000000)",
-                }}
-                className={`col-md-8 offset-md-2 bg-light p-5   ${
-                  isDarkMode ? "bg-dark" : "bg-light"
-                }   ${isDarkMode ? "text-light" : "text-light"}`}
-              >
-                {/* Setting heading and icon */}
-                <h2
+  const card = (loading, user) => {
+    return (
+      <>
+        {" "}
+        {loading ? (
+          <SyncOutlined
+            spin
+            className="d-flex justify-content-center display-1 text-danger p-5"
+          />
+        ) : (
+          <>
+            {/* modal preview */}
+            <div>
+              <div className="row pt-2">
+                <div
                   style={{
-                    display: "flex",
-                    justifyContent: "space-between",
+                    marginTop: "25px",
+                    borderRadius: "50px",
+                    backgroundImage:
+                      "linear-gradient(to right,  #0652C5, #000000)",
                   }}
+                  className={`col-md-8 offset-md-2 bg-light p-5   ${
+                    isDarkMode ? "bg-dark" : "bg-light"
+                  }   ${isDarkMode ? "text-light" : "text-light"}`}
                 >
-                  Setting
-                  <div>
-                    <SettingOutlined className={` float-right `} />
-                    <EditOutlined onClick={showModal} />
-                  </div>
-                </h2>
+                  {/* Setting heading and icon */}
+                  <h2
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    Setting
+                    <div>
+                      <SettingOutlined className={` float-right `} />
+                      <EditOutlined onClick={showModal} />
+                    </div>
+                  </h2>
 
-                {/* referral Id */}
-                <h2
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  Referral Id
-                  <div>
-                    <Button
-                      type="primary"
-                      style={{ background: "lightgreen", color: "black" }}
-                      onClick={() => copyToClipboard(referrals)}
-                      icon={<CopyOutlined />}
-                    >
-                      copy
-                    </Button>
-                    {"  "}
-                    {referrals}
-                  </div>
-                </h2>
-                <hr />
+                  {/* referral Id */}
+                  <h2
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    Referral Id
+                    <div>
+                      <Button
+                        type="primary"
+                        style={{ background: "lightgreen", color: "black" }}
+                        onClick={() => copyToClipboard(referrals)}
+                        icon={<CopyOutlined />}
+                      >
+                        copy
+                      </Button>
+                      {"  "}
+                      {referrals}
+                    </div>
+                  </h2>
+                  <hr />
 
-                {/* Username */}
-                <h2
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  UserName
-                  <div>{user?.user?.name} </div>
-                </h2>
-                <hr />
+                  {/* Username */}
+                  <h2
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    UserName
+                    <div>{user?.user?.name} </div>
+                  </h2>
+                  <hr />
 
-                {/* email */}
-                <h2
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  Email
-                  <div>{user?.user?.email} </div>
-                </h2>
-                <hr />
+                  {/* email */}
+                  <h2
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    Email
+                    <div>{user?.user?.email} </div>
+                  </h2>
+                  <hr />
 
-                {/* Password */}
-                <h2
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  Password
-                  <div>Swatantra@123</div>
-                </h2>
-                <hr style={{ color: "white" }} />
+                  {/* Password */}
+                  <h2
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    Password
+                    <div>Swatantra@123</div>
+                  </h2>
+                  <hr style={{ color: "white" }} />
 
-                {/* Total Team members */}
-                <h2
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  Total Team Size
-                  <div>500 </div>
-                </h2>
-                <hr style={{ color: "white" }} />
+                  {/* Total Team members */}
+                  <h2
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    Total Team Size
+                    <div>500 </div>
+                  </h2>
+                  <hr style={{ color: "white" }} />
 
-                {/* Total BV */}
-                <h2
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  Total BV
-                  <div>3500 BV </div>
-                </h2>
-                <hr style={{ color: "white" }} />
+                  {/* Total BV */}
+                  <h2
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    Total BV
+                    <div>3500 BV </div>
+                  </h2>
+                  <hr style={{ color: "white" }} />
 
-                {/* Stripe account */}
-                <h2
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  Stripe Account Id
-                  <div>{user && user.user.stripe_account_id} </div>
-                </h2>
-                <hr />
+                  {/* Stripe account */}
+                  <h2
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    Stripe Account Id
+                    <div>{user && user.user.stripe_account_id} </div>
+                  </h2>
+                  <hr />
+                </div>
               </div>
             </div>
-          </div>
-        </>
-      )}
+          </>
+        )}
+      </>
+    );
+  };
+  return (
+    <>
+      {/* modal */}
+      {modalPreview(isModalOpen)}
+
+      {/* loading, user */}
+      {card(loading, user)}
     </>
   );
 };

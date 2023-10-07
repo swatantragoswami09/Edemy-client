@@ -7,6 +7,7 @@ import { Context } from "../context";
 import { DarkModeContext } from "../context/DarkModeContext";
 import { useRouter } from "next/router";
 import { loginUserApi } from "./API";
+import { Footer } from "../components/footer/Footer";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -107,6 +108,9 @@ const Login = () => {
             <Link href="/forget-password">Forget password</Link>
           </p>
         </div>
+
+        {/* footer */}
+        <Footer />
       </div>
     </>
   );

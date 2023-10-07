@@ -1,6 +1,7 @@
 import { SyncOutlined } from "@ant-design/icons";
 import AboutNav from "../nav/AboutNav";
 import { useState } from "react";
+import { Footer } from "../footer/Footer";
 
 // E-> Education
 // E-> Examination
@@ -29,6 +30,8 @@ const AboutRoute = ({ children }) => {
           </div>
         </div>
       )}
+      {/* footer */}
+      <Footer />
     </>
   );
 };

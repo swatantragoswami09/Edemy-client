@@ -7,11 +7,9 @@ import { toast } from "react-toastify";
 import SingleCourseJombotron from "../../components/cards/SingleCourseJumbotron";
 import SingleCourseLessons from "../../components/cards/SingleCourseLessons";
 import { loadStripe } from "@stripe/stripe-js";
-import useNode from "../../hooks/useNode";
-
 import SingleComment from "../../components/comments/SingleComment";
 import { getCourseBySlug } from "../API";
-// import Comments from "../../components/comments/Comment";
+import { Footer } from "../../components/footer/Footer";
 
 const comments = {
   id: 1,
@@ -23,7 +21,6 @@ const SingleCourse = ({ course }) => {
   const [preview, setPreview] = useState("");
   const [loading, setLoading] = useState(false);
   const [enrolled, setEnrolled] = useState({});
-  const [commentsData, setCommentsData] = useState(comments);
 
   const router = useRouter();
   const { slug } = router.query;
@@ -32,9 +29,6 @@ const SingleCourse = ({ course }) => {
   const {
     state: { user },
   } = useContext(Context);
-  const { insertNode, editNode, deleteNode } = useNode();
-
-  console.log("slug=>", slug);
 
   useEffect(() => {
     if (user && course) {
@@ -127,6 +121,8 @@ const SingleCourse = ({ course }) => {
       >
         <SingleComment />
       </div>
+
+      <Footer />
     </>
   );
 };

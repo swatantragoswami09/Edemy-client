@@ -56,7 +56,6 @@ const TopNav = () => {
     toast(data.message);
     router.push("/login");
   };
-
   const handleSearchSuggestions = async (value) => {
     if (value) {
       try {
@@ -101,20 +100,193 @@ const TopNav = () => {
       setSuggestedCourses([]);
     }
   };
-
   const handleSearch = () => {
     if (searchValue) {
       const selectedCourseName = searchValue.split("<br/>")[0].trim();
       router.push(`/course/search/${selectedCourseName}`);
     }
   };
-
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       e.stopPropagation();
       handleSearch();
     }
   };
+  const app = () => {
+    return (
+      <Item key="/" onClick={() => setCurrent("/")}>
+        <Link href="/">
+          <a>
+            <AppstoreOutlined /> App
+          </a>
+        </Link>
+      </Item>
+    );
+  };
+  const createCourse = () => {
+    return (
+      <Item
+        key="/instructor/course/create"
+        onClick={() => setCurrent("/instructor/course/create")}
+      >
+        <Link href="/instructor/course/create">
+          <a>
+            <CarryOutOutlined /> Create Course
+          </a>
+        </Link>
+      </Item>
+    );
+  };
+  const becomeInstructor = () => {
+    return (
+      <Item
+        key="/user/become-instructor"
+        onClick={() => setCurrent("/user/become-instructor")}
+      >
+        <Link href="/user/become-instructor">
+          <a>
+            <TeamOutlined /> Become Instructor
+          </a>
+        </Link>
+      </Item>
+    );
+  };
+  const darkModeButton = () => {
+    return (
+      <Item key="darkModeToggle" className="dark-mode-toggle">
+        <Switch
+          checked={isDarkMode}
+          onChange={toggleDarkMode}
+          checkedChildren={<BulbOutlined />}
+          unCheckedChildren={<BulbOutlined />}
+        />
+      </Item>
+    );
+  };
+  const FAQ = () => {
+    return (
+      <Item
+        key="/FAQ"
+        onClick={(e) => console.log("about")}
+        icon={<QuestionCircleOutlined />}
+      >
+        <Link href="/FAQ">
+          <a>FAQ</a>
+        </Link>
+      </Item>
+    );
+  };
+  const about = () => {
+    return (
+      <Item
+        key="/about"
+        onClick={(e) => console.log("about")}
+        icon={<AlignRightOutlined />}
+      >
+        <Link href="/about">
+          <a>About</a>
+        </Link>
+      </Item>
+    );
+  };
+  const autoComplete = () => {
+    return (
+      <AutoComplete
+        dropdownMatchSelectWidth={252}
+        style={{ width: 300 }}
+        options={suggestedCourses.map((course) => ({ value: course }))}
+        onSearch={handleSearchSuggestions}
+        value={searchValue}
+      >
+        <Input.Search
+          size="medium"
+          placeholder="Search for a course"
+          enterButton
+          onSearch={handleSearch}
+          onKeyDown={handleKeyDown}
+          onChange={(e) => setSearchValue(e.target.value)}
+        />
+      </AutoComplete>
+    );
+  };
+  const notLoggedIn = () => {
+    return (
+      <>
+        <Item key="/login" onClick={() => setCurrent("/login")}>
+          <Link href="/login">
+            <a>
+              <LoginOutlined /> Login
+            </a>
+          </Link>
+        </Item>
+        <Item key="/register" onClick={() => setCurrent("/register")}>
+          <Link href="/register">
+            <a>
+              <UserAddOutlined /> Register
+            </a>
+          </Link>
+        </Item>
+      </>
+    );
+  };
+  const instructorNav = (user) => {
+    return (
+      <>
+        {user?.user?.role && user?.user?.role.includes("Instructor") && (
+          <Item key="/instructor" onClick={() => setCurrent("/instructor")}>
+            <Link href="/instructor">
+              <a>
+                <TeamOutlined /> Instructor
+              </a>
+            </Link>
+          </Item>
+        )}
+      </>
+    );
+  };
+  const userSubmenu = (user) => {
+    return (
+      <SubMenu
+        icon={<CoffeeOutlined />}
+        title={user?.user && user?.user?.name}
+        className="float-right"
+      >
+        <ItemGroup>
+          <Item key="/user">
+            <Link href="/user">
+              <a>Dashboard</a>
+            </Link>
+          </Item>
+          <Item key="/settings">
+            <Link href="/settings">
+              <a>Settings</a>
+            </Link>
+          </Item>
+          <Item onClick={logout}>
+            <LogoutOutlined /> Logout
+          </Item>
+        </ItemGroup>
+      </SubMenu>
+    );
+  };
+  const lastOne = (lastOne) => {
+    return (
+      <>
+        {user === null ? (
+          notLoggedIn()
+        ) : (
+          <>
+            {/* instructor */}
+            {instructorNav(user)}
+
+            {/* user submenu */}
+            {userSubmenu(user)}
+          </>
+        )}
+      </>
+    );
+  };
+
   return (
     <Menu
       mode="horizontal"
@@ -124,144 +296,35 @@ const TopNav = () => {
       }`}
     >
       <div style={{ display: "flex", alignItems: "center" }}>
-        <Item key="/" onClick={() => setCurrent("/")}>
-          <Link href="/">
-            <a>
-              <AppstoreOutlined /> App
-            </a>
-          </Link>
-        </Item>
+        {/* app */}
+        {app()}
+
+        {/* create course and become instructor */}
         {user &&
         user.user &&
         user.user.role &&
-        user.user.role.includes("Instructor") ? (
-          <Item
-            key="/instructor/course/create"
-            onClick={() => setCurrent("/instructor/course/create")}
-          >
-            <Link href="/instructor/course/create">
-              <a>
-                <CarryOutOutlined /> Create Course
-              </a>
-            </Link>
-          </Item>
-        ) : (
-          <Item
-            key="/user/become-instructor"
-            onClick={() => setCurrent("/user/become-instructor")}
-          >
-            <Link href="/user/become-instructor">
-              <a>
-                <TeamOutlined /> Become Instructor
-              </a>
-            </Link>
-          </Item>
-        )}
-        <Item key="darkModeToggle" className="dark-mode-toggle">
-          <Switch
-            checked={isDarkMode}
-            onChange={toggleDarkMode}
-            checkedChildren={<BulbOutlined />}
-            unCheckedChildren={<BulbOutlined />}
-          />
-        </Item>
+        user.user.role.includes("Instructor")
+          ? createCourse()
+          : becomeInstructor()}
+
+        {/* darkMode button */}
+        {darkModeButton()}
       </div>
 
       <div
         style={{ display: "flex", alignItems: "center", marginLeft: "auto" }}
       >
-        <Item
-          key="/FAQ"
-          onClick={(e) => console.log("about")}
-          icon={<QuestionCircleOutlined />}
-        >
-          <Link href="/FAQ">
-            <a>FAQ</a>
-          </Link>
-        </Item>
-        <Item
-          key="/about"
-          onClick={(e) => console.log("about")}
-          icon={<AlignRightOutlined />}
-        >
-          <Link href="/about">
-            <a>About</a>
-          </Link>
-        </Item>
-        <AutoComplete
-          dropdownMatchSelectWidth={252}
-          style={{ width: 300 }}
-          options={suggestedCourses.map((course) => ({ value: course }))}
-          onSearch={handleSearchSuggestions}
-          value={searchValue}
-        >
-          <Input.Search
-            size="medium"
-            placeholder="Search for a course"
-            enterButton
-            onSearch={handleSearch}
-            onKeyDown={handleKeyDown}
-            onChange={(e) => setSearchValue(e.target.value)}
-          />
-        </AutoComplete>
-        {user === null ? (
-          <>
-            <Item key="/login" onClick={() => setCurrent("/login")}>
-              <Link href="/login">
-                <a>
-                  <LoginOutlined /> Login
-                </a>
-              </Link>
-            </Item>
-            <Item key="/register" onClick={() => setCurrent("/register")}>
-              <Link href="/register">
-                <a>
-                  <UserAddOutlined /> Register
-                </a>
-              </Link>
-            </Item>
-          </>
-        ) : (
-          <>
-            {user?.user?.role && user?.user?.role.includes("Instructor") && (
-              <Item
-                key="/instructor"
-                onClick={(e) => setCurrent(e.key)}
-                icon={<TeamOutlined />}
-              ></Item>
-            )}
-            {user.user.role && user.user.role.includes("Instructor") && (
-              <Item key="/instructor" onClick={() => setCurrent("/instructor")}>
-                <Link href="/instructor">
-                  <a>
-                    <TeamOutlined /> Instructor
-                  </a>
-                </Link>
-              </Item>
-            )}
-            <SubMenu
-              icon={<CoffeeOutlined />}
-              title={user?.user && user?.user?.name}
-              className="float-right"
-            >
-              <ItemGroup>
-                <Item key="/user">
-                  <Link href="/user">
-                    <a>Dashboard</a>
-                  </Link>
-                </Item>
-                <Item key="/settings">
-                  <Link href="/settings">
-                    <a>Settings</a>
-                  </Link>
-                </Item>
-                <Item onClick={logout}>
-                  <LogoutOutlined /> Logout
-                </Item>
-              </ItemGroup>
-            </SubMenu>
-          </>
-        )}
+        {/* FAQ */}
+        {FAQ()}
+
+        {/* about */}
+        {about()}
+
+        {/* auto complete */}
+        {autoComplete()}
+
+        {/* last-one */}
+        {lastOne(user)}
       </div>
     </Menu>
   );

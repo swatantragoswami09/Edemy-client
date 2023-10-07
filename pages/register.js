@@ -1,5 +1,4 @@
 import { useContext, useState, useEffect } from "react";
-import axios from "axios";
 import { toast } from "react-toastify";
 import { SyncOutlined } from "@ant-design/icons";
 import Link from "next/link";
@@ -7,6 +6,7 @@ import { Context } from "../context";
 import { useRouter } from "next/router";
 import { DarkModeContext } from "../context/DarkModeContext";
 import { registerUserApi } from "./API";
+import { Footer } from "../components/footer/Footer";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -44,6 +44,7 @@ const Register = () => {
       setLoading(false);
     }
   };
+
   return (
     <>
       <div
@@ -92,6 +93,9 @@ const Register = () => {
             Already registered ? <Link href="/login">Login</Link>
           </p>
         </div>
+
+        {/* footer */}
+        <Footer />
       </div>
     </>
   );
