@@ -36,7 +36,7 @@ const CourseCard = ({ loading, course }) => {
                   : "https://skg-edemy-bucket.s3.amazonaws.com/Image_not_available.png"
               }
               alt={name}
-              style={{ objectFit: "cover" }}
+              style={{ objectFit: "cover", width: "100%", height: "50%" }}
               className="p-1"
             />
           }

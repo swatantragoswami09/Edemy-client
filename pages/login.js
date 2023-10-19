@@ -29,9 +29,12 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      setLoading(true);
-      const data = await loginUserApi(email, password);
+    setLoading(true);
+    const data = await loginUserApi(email, password);
+
+    if (!data) {
+      setLoading(false);
+    } else {
       dispatch({
         type: "LOGIN",
         payload: data,
@@ -42,11 +45,6 @@ const Login = () => {
 
       // redirect
       router.push("/user");
-
-      // setLoading(false);
-    } catch (error) {
-      toast.error(error.response.data);
-      setLoading(false);
     }
   };
   return (

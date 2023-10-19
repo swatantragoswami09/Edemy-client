@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Context } from "../context";
 import { useRouter } from "next/router";
 import { DarkModeContext } from "../context/DarkModeContext";
-import { registerUserApi } from "./API";
+import { loginUserApi, registerUserApi } from "./API";
 import { Footer } from "../components/footer/Footer";
 
 const Register = () => {
@@ -20,6 +20,7 @@ const Register = () => {
 
   // router
   const router = useRouter();
+
   // DarkModeContext
   const { isDarkMode } = useContext(DarkModeContext);
 
@@ -28,21 +29,41 @@ const Register = () => {
     return null;
   }
 
+  const handlelogin = async (email, password) => {
+    setLoading(true);
+    const data = await loginUserApi(email, password);
+
+    if (!data) {
+      setLoading(false);
+    } else {
+      dispatch({
+        type: "LOGIN",
+        payload: data,
+      });
+
+      // save in local storage
+      window.localStorage.setItem("user", JSON.stringify(data));
+
+      // redirect
+      router.push("/user");
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      setLoading(true);
-      const data = await registerUserApi(name, email, password);
-      toast.success("Registration Successful. Please login.");
-      setName("");
-      setEmail("");
-      setPassword("");
-      setLoading(false);
-      router.push("/login");
-    } catch (error) {
-      toast.error(error.response.data);
+
+    setLoading(true);
+    const data = await registerUserApi(name, email, password);
+
+    if (!data) {
       setLoading(false);
     }
+    toast.success(`${name} Registration Successful. Redirecting`);
+    setName("");
+    setEmail("");
+    setPassword("");
+    setLoading(false);
+    handlelogin(email, password);
   };
 
   return (

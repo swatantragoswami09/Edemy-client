@@ -7,6 +7,7 @@ import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import { getInstructorAllCourses } from "../API";
 import { Context } from "../../context";
 import { Header } from "../../components/header/Header";
+import { DarkModeContext } from "../../context/DarkModeContext";
 
 const InstructorIndex = () => {
   // state
@@ -17,26 +18,36 @@ const InstructorIndex = () => {
   // router
   const router = useRouter();
 
-  if (user == null) {
-    // router.push("/");
-    // router.push("/");
-    return null;
-  }
-  useEffect(() => {
-    loadCourses();
-  }, []);
+  const { isDarkMode, toggleDarkMode } = useContext(DarkModeContext);
 
   const loadCourses = async () => {
     const data = await getInstructorAllCourses();
+    console.log(data);
     setCourses(data);
   };
+  useEffect(async () => {
+    loadCourses();
+    () => {
+      setCourses();
+    };
+  }, []);
+
+  if (user == null) {
+    // router.push("/");
+    return null;
+  }
 
   const myStyle = { marginTop: "-15px", fontSize: "20px" };
 
-  const getCourses = () =>
-    courses.map((course) => {
+  const getCourses = (courses) =>
+    courses.map((course, index) => {
       return (
-        <div className="media pl-2">
+        <div
+          className={`media pl-2 ${isDarkMode ? "bg-dark" : "bg-light"}   ${
+            isDarkMode ? "text-light" : "text-dark"
+          }`}
+          key={index}
+        >
           <div className="media-body">
             <div className="row">
               <Avatar

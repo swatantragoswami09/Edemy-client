@@ -14,7 +14,6 @@ import {
   QuestionCircleOutlined,
 } from "@ant-design/icons";
 import { Context } from "../context";
-import axios from "axios";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import { DarkModeContext } from "../context/DarkModeContext";
@@ -192,7 +191,7 @@ const TopNav = () => {
   const autoComplete = () => {
     return (
       <AutoComplete
-        dropdownMatchSelectWidth={252}
+        popupMatchSelectWidth={252}
         style={{ width: 300 }}
         options={suggestedCourses.map((course) => ({ value: course }))}
         onSearch={handleSearchSuggestions}
@@ -230,6 +229,7 @@ const TopNav = () => {
     );
   };
   const instructorNav = (user) => {
+    console.log("user=>", user);
     return (
       <>
         {user?.user?.role && user?.user?.role.includes("Instructor") && (

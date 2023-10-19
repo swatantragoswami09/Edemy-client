@@ -8,7 +8,7 @@ import {
 
 export const Footer = () => {
   return (
-    <h2 className="jumbotron bg-primary ">
+    <h2 className="jumbotronFooter bg-primary ">
       Get in touch with our team <br />
       <div style={{ cursor: "pointer" }}>
         <FacebookOutlined /> <LinkedinOutlined /> <InstagramFilled />{" "}

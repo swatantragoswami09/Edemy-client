@@ -11,6 +11,7 @@ const AddLessonForm = ({
   progress,
   handleVideoRemove,
 }) => {
+  console.log("values=", values);
   return (
     <div className="container pt-3 ">
       <form onSubmit={handleAddLesson}>

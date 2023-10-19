@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import InstructorRoute from "../../../../components/routes/InstructorRoute";
 import CourseCreateForm from "../../../../components/forms/CourseCreateForm";
 import Resizer from "react-image-file-resizer";
@@ -7,7 +7,22 @@ import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import { Avatar, List, Modal } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
+
+// APIs
 import UpdateLessonForm from "../../../../components/forms/UpdateLessonForm";
+import { getDirectCourseBySlug } from "../../../API/course/getDirectCourseBySlug";
+import {
+  uploadImage,
+  removeImage,
+  updateImage,
+} from "../../../API/course/image";
+import {
+  removeLesson,
+  removePreviousVideo,
+  saveVideo,
+  updateLesson,
+} from "../../../API/course/lessons";
+import { DarkModeContext } from "../../../../context/DarkModeContext";
 
 const CourseEdit = () => {
   // state
@@ -37,13 +52,14 @@ const CourseEdit = () => {
 
   const router = useRouter();
   const { slug } = router.query;
+  const { isDarkMode, toggleDarkMode } = useContext(DarkModeContext);
 
   useEffect(() => {
     loadCourse();
   }, [slug]);
 
   const loadCourse = async () => {
-    const { data } = await axios.get(`/api/course/${slug}`);
+    const data = await getDirectCourseBySlug(slug);
     if (data) setValues(data);
     if (data && data.image) setImage(data.image);
   };
@@ -61,9 +77,7 @@ const CourseEdit = () => {
     // reize
     Resizer.imageFileResizer(file, 720, 500, "JPEG", 100, 0, async (uri) => {
       try {
-        let { data } = await axios.post("/api/course/upload-image", {
-          image: uri,
-        });
+        let data = await uploadImage(uri);
         console.log("resize image data=>", data);
         // set image in the state
         setImage(data);
@@ -76,10 +90,9 @@ const CourseEdit = () => {
     });
   };
   const handleImageRemove = async () => {
-    console.log("remove image");
     try {
       setValues({ ...values, loading: true });
-      const res = await axios.post("/api/course/remove-image", { image });
+      const res = await removeImage(image);
       setImage({});
       setPreview("");
       setUploadButtionText("Upload Image");
@@ -93,12 +106,9 @@ const CourseEdit = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.put(`/api/course/${slug}`, {
-        ...values,
-        image,
-      });
+      const data = await updateImage(slug, values, image);
       toast("Course updated");
-      //   router.push("/instructor");
+      router.push("/instructor");
     } catch (error) {
       console.log(error);
       toast(error.response.data);
@@ -109,22 +119,15 @@ const CourseEdit = () => {
     e.dataTransfer.setData("itemIndex", index);
   };
   const handleDrop = async (e, index) => {
-    console.log("ON DROP =>", index);
     const movingItemIndex = e.dataTransfer.getData("itemIndex");
     const targetItemIndex = index;
     let allLessons = values.lessons;
-
     let movingItem = allLessons[movingItemIndex];
     allLessons.splice(movingItemIndex, 1); // remove 1 item from the given index
     allLessons.splice(targetItemIndex, 0, movingItem); // push item after target item index
     setValues({ ...values, lessons: [...allLessons] });
     // save the new lesson order in db
-    const { data } = await axios.put(`/api/course/${slug}`, {
-      ...values,
-      image,
-    });
-
-    console.log("LESSONS REARRANGE RES =>", data);
+    const data = await updateImage(slug, values, image);
     toast("Lessons rearrange successfully");
   };
   const handleDelete = async (index) => {
@@ -135,21 +138,18 @@ const CourseEdit = () => {
 
     setValues({ ...values, lessons: allLessons });
     //  send request to server
-    const { data } = await axios.put(`/api/course/${slug}/${removed[0]._id}`);
+    const data = await removeLesson(slug, removed);
     console.log("LESSON DELETED=>", data);
+    toast.success("Lesson deleted successfully");
   };
 
   /**
    * lesson update functions
    */
-
   const handleVideo = async (e) => {
     // remove previous video
     if (current.video && current.video.Location) {
-      const res = await axios.post(
-        `/api/course/video-remove/${values.instructor._id}`,
-        current.video
-      );
+      const res = await removePreviousVideo(values, current);
       console.log("REMOVED ==>", res);
     }
     // upload
@@ -161,14 +161,7 @@ const CourseEdit = () => {
     videoData.append("video", file);
     videoData.append("courseId", values._id);
     // save progress bar and send video as form data to backend
-    const { data } = await axios.post(
-      `/api/course/video-upload/${values.instructor._id}`,
-      videoData,
-      {
-        onUploadProgress: (e) =>
-          setProgress(Math.round((100 * e.loaded) / e.total)),
-      }
-    );
+    const data = await saveVideo(values, videoData, setProgress);
     console.log("data=> =", data);
     setCurrent({ ...current, video: data });
     setUploading(false);
@@ -176,10 +169,7 @@ const CourseEdit = () => {
 
   const handleUpdateLesson = async (e) => {
     e.preventDefault();
-    const { data } = await axios.put(
-      `/api/course/lesson/${slug}/${current._id}`,
-      current
-    );
+    const data = await updateLesson(slug, current);
     setUploadVideoButtonText("Upload Video");
 
     setVisible(false);
@@ -192,9 +182,8 @@ const CourseEdit = () => {
       toast("Lesson Updated");
     }
   };
-  return (
-    <InstructorRoute>
-      <h1 className="jumbotron text-center bg-primary square">Update Course</h1>
+  const createForm = () => {
+    return (
       <div className="pt-3 pb-3">
         <CourseCreateForm
           handleSubmit={handleSubmit}
@@ -207,8 +196,15 @@ const CourseEdit = () => {
           editPage={true}
         />
       </div>
-      <hr />
-      <div className="row">
+    );
+  };
+  const listOfLessons = () => {
+    return (
+      <div
+        className={`row ${isDarkMode ? "bg-dark" : "bg-light"}   ${
+          isDarkMode ? "text-light" : "text-dark"
+        }`}
+      >
         <div className="col lesson-list">
           <h4>{values && values.lessons && values.lessons.length} Lessons</h4>
           <List
@@ -222,6 +218,7 @@ const CourseEdit = () => {
                   onDragStart={(e) => handleDrag(e, index)}
                   onDrop={(e) => handleDrop(e, index)}
                   style={{ cursor: "pointer" }}
+                  key={index}
                 >
                   <List.Item.Meta
                     onClick={() => {
@@ -241,10 +238,15 @@ const CourseEdit = () => {
           ></List>
         </div>
       </div>
+    );
+  };
+
+  const updateModal = () => {
+    return (
       <Modal
         title="Update lesson"
         centered
-        visible={visible}
+        open={visible}
         onCancel={() => setVisible(false)}
         footer={null}
       >
@@ -259,6 +261,18 @@ const CourseEdit = () => {
         />
         {/* <pre>{JSON.stringify(current, null, 4)}</pre> */}
       </Modal>
+    );
+  };
+  return (
+    <InstructorRoute>
+      <h1 className="jumbotron text-center bg-primary square">Update Course</h1>
+      {/* create form */}
+      {createForm()}
+      <hr />
+      {/* list of lessons */}
+      {listOfLessons()}
+      {/* update modal */}
+      {updateModal()}
     </InstructorRoute>
   );
 };
