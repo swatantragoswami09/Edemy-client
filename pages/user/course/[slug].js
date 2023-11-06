@@ -13,7 +13,7 @@ import {
   MinusCircleFilled,
 } from "@ant-design/icons";
 import { DarkModeContext } from "../../../context/DarkModeContext";
-import { getUserCoursesBySlug } from "../../API";
+import { getUserCoursesBySlug } from "../../../components/api";
 
 const SingleCourse = () => {
   const [clicked, setClicked] = useState(-1);

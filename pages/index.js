@@ -1,9 +1,8 @@
-import axios from "axios";
 import CourseCard from "../components/cards/CourseCard";
 import { useContext, useEffect } from "react";
 import { DarkModeContext } from "../context/DarkModeContext";
 import { useState } from "react";
-import { getAllCourses } from "./API";
+import { getAllCourses } from "../components/api";
 import { Carousel } from "antd";
 import { Footer } from "../components/footer/Footer";
 

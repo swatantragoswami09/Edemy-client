@@ -1,6 +1,5 @@
 import { useState, useEffect, useContext } from "react";
 import InstructorRoute from "../../components/routes/InstructorRoute";
-import axios from "axios";
 import {
   DollarOutlined,
   SettingOutlined,
@@ -9,7 +8,7 @@ import {
 import { DarkModeContext } from "../../context/DarkModeContext";
 
 import { currency, currencyFormatter } from "../../utils/helpers";
-import { instructorBalanceApi } from "../API";
+import { instructorBalanceApi } from "../../components/api";
 
 const InstructorRevenue = () => {
   const [balance, setBalance] = useState({ pending: [] });

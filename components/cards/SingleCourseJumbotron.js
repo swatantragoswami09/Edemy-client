@@ -4,7 +4,7 @@ import ReactPlayer from "react-player";
 import { LoadingOutlined, SafetyOutlined } from "@ant-design/icons";
 import { useContext, useEffect } from "react";
 import { DarkModeContext } from "../../context/DarkModeContext";
-import { addReviewApi } from "../../pages/API";
+import { addReviewApi } from "../api";
 import { toast } from "react-toastify";
 
 const SingleCourseJombotron = ({

@@ -17,7 +17,7 @@ import { Context } from "../context";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import { DarkModeContext } from "../context/DarkModeContext";
-import { logoutApi, searchCourseApi } from "../pages/API";
+import { logoutApi, searchCourseApi } from "../components/api/";
 
 const { Item, SubMenu, ItemGroup } = Menu;
 

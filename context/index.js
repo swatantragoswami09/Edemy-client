@@ -1,7 +1,7 @@
 import { useReducer, createContext, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
-import { getCsrfTokenApi } from "../pages/API";
+import { getCsrfTokenApi } from "../components/api";
 
 // intial state
 const initialState = {

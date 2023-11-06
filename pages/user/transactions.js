@@ -4,7 +4,7 @@ import { Table, Tag } from "antd";
 import axios from "axios";
 import { currencyFormatter, columns, dateFormater } from "../../utils/helpers";
 import { Context } from "../../context";
-import { allTransactionApi } from "../API";
+import { allTransactionApi } from "../../components/api";
 
 const Transaction = () => {
   const [dataSource, setDataSource] = useState([]);

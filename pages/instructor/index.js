@@ -4,7 +4,7 @@ import InstructorRoute from "../../components/routes/InstructorRoute";
 import { Avatar, Tooltip } from "antd";
 import Link from "next/link";
 import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
-import { getInstructorAllCourses } from "../API";
+import { getInstructorAllCourses } from "../../components/api";
 import { Context } from "../../context";
 import { Header } from "../../components/header/Header";
 import { DarkModeContext } from "../../context/DarkModeContext";

@@ -1,12 +1,10 @@
 import { useState, useContext, useEffect } from "react";
-import { toast } from "react-toastify";
-import axios from "axios";
 import Link from "next/link";
 import { SyncOutlined } from "@ant-design/icons";
 import { Context } from "../context";
 import { DarkModeContext } from "../context/DarkModeContext";
 import { useRouter } from "next/router";
-import { loginUserApi } from "./API";
+import { loginUserApi } from "../components/api";
 import { Footer } from "../components/footer/Footer";
 
 const Login = () => {

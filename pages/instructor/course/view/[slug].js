@@ -16,13 +16,13 @@ import AddLessonForm from "../../../../components/forms/AddLessonForm";
 import { toast } from "react-toastify";
 
 // APIs
-import { postStudentCount } from "../../../API/instructor/postStudentCount";
-import { getDirectCourseBySlug } from "../../../API/course/getDirectCourseBySlug";
-import { postCourse } from "../../../API/instructor/postCourse";
-import { postVideo } from "../../../API/instructor/postVideo";
-import { postVideoRemove } from "../../../API/instructor/postVideoRemove";
-import { putCoursePublish } from "../../../API/instructor/putCoursePublish";
-import { putCourseUnpublish } from "../../../API/instructor/putCourseUnpublish";
+import { postStudentCount } from "../../../../components/api/";
+import { getDirectCourseBySlug } from "../../../../components/api/";
+import { postCourse } from "../../.././../components/api";
+import { postVideo } from "../../../../components/api/";
+import { postVideoRemove } from "../../../../components/api";
+import { putCoursePublish } from "../../../../components/api";
+import { putCourseUnpublish } from "../../../../components/api";
 import { DarkModeContext } from "../../../../context/DarkModeContext";
 
 const CourseView = () => {

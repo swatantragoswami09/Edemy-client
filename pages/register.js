@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Context } from "../context";
 import { useRouter } from "next/router";
 import { DarkModeContext } from "../context/DarkModeContext";
-import { loginUserApi, registerUserApi } from "./API";
+import { loginUserApi, registerUserApi } from "../components/api";
 import { Footer } from "../components/footer/Footer";
 
 const Register = () => {

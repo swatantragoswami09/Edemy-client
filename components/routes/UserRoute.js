@@ -3,7 +3,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { SyncOutlined } from "@ant-design/icons";
 import UserNav from "../nav/UserNav";
-import { currentUserApi } from "../../pages/API";
+import { currentUserApi } from "../api";
 
 // E-> Education
 // E-> Examination

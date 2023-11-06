@@ -5,7 +5,7 @@ import { DarkModeContext } from "../../context/DarkModeContext";
 import { Tree, Card } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import UserRoute from "../../components/routes/UserRoute";
-import { getReferralByIdApi } from "../API";
+import { getReferralByIdApi } from "../../components/api";
 
 const Organisation = () => {
   const {

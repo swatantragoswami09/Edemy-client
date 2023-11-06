@@ -1,8 +1,7 @@
-import { useEffect, useState, useContext } from "react";
-import axios from "axios";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { SyncOutlined } from "@ant-design/icons";
-import { currentUserApi } from "../../pages/API";
+import { currentUserApi } from "../api/";
 
 // E-> Education
 // E-> Examination

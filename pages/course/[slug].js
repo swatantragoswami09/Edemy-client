@@ -8,7 +8,7 @@ import SingleCourseJombotron from "../../components/cards/SingleCourseJumbotron"
 import SingleCourseLessons from "../../components/cards/SingleCourseLessons";
 import { loadStripe } from "@stripe/stripe-js";
 import SingleComment from "../../components/comments/SingleComment";
-import { getCourseBySlug } from "../API";
+import { getCourseBySlug } from "../../components/api";
 import { Footer } from "../../components/footer/Footer";
 
 const comments = {

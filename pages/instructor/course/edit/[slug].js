@@ -10,18 +10,18 @@ import { DeleteOutlined } from "@ant-design/icons";
 
 // APIs
 import UpdateLessonForm from "../../../../components/forms/UpdateLessonForm";
-import { getDirectCourseBySlug } from "../../../API/course/getDirectCourseBySlug";
+import { getDirectCourseBySlug } from "../../../../components/api";
 import {
   uploadImage,
   removeImage,
   updateImage,
-} from "../../../API/course/image";
+} from "../../../../components/api";
 import {
   removeLesson,
   removePreviousVideo,
   saveVideo,
   updateLesson,
-} from "../../../API/course/lessons";
+} from "../../../../components/api";
 import { DarkModeContext } from "../../../../context/DarkModeContext";
 
 const CourseEdit = () => {

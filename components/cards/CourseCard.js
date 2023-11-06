@@ -2,7 +2,7 @@ import { Badge, Card, Avatar } from "antd";
 import Link from "next/link";
 import { currencyFormatter } from "../../utils/helpers";
 import { Rate } from "antd";
-import { addReviewApi } from "../../pages/API";
+import { addReviewApi } from "../api/";
 import { Context } from "../../context";
 import { useContext } from "react";
 import { toast } from "react-toastify";

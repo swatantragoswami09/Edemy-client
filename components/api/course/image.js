@@ -29,4 +29,3 @@ export const updateImage = async (slug, values, image) => {
     console.log(error.message);
   }
 };
-

@@ -12,7 +12,7 @@ import { useRouter } from "next/router";
 import copy from "copy-to-clipboard";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { getReferralByIdApi } from "../API";
+import { getReferralByIdApi } from "../../components/api";
 
 const Settings = () => {
   const [name, setName] = useState("");

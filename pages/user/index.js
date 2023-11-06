@@ -6,7 +6,7 @@ import { Avatar } from "antd";
 import Link from "next/link";
 import { SyncOutlined, PlayCircleOutlined } from "@ant-design/icons";
 import { DarkModeContext } from "../../context/DarkModeContext";
-import { getUserAllOwnedCourses } from "../API";
+import { getUserAllOwnedCourses } from "../../components/api";
 
 const UserIndex = () => {
   const [courses, setCourses] = useState([]);
