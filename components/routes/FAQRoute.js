@@ -1,7 +1,7 @@
 import { SyncOutlined } from "@ant-design/icons";
 import AboutNav from "../nav/AboutNav";
 import { useState } from "react";
-import FAQ from "../nav/FAQ";
+import FAQ from "../FAQ";
 
 // E-> Education
 // E-> Examination
