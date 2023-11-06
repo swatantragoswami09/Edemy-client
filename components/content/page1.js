@@ -1,4 +1,4 @@
-import AboutRoute from "../../../components/routes/AboutRoute";
+import AboutRoute from "../routes/AboutRoute";
 
 const Page = () => {
   return (

@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import AboutRoute from "../../components/routes/AboutRoute";
 import { DarkModeContext } from "../../context/DarkModeContext";
-import { data } from "./content/contents";
+import { data } from "../../components/content/contents";
 
 const About = () => {
   const { isDarkMode, toggleDarkMode } = useContext(DarkModeContext);
