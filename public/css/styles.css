@@ -20,3 +20,47 @@ body {
 .pointer {
   cursor: pointer;
 }
+
+/* new css */
+.largeWidth {
+  width: 300px;
+}
+
+.smallWidth {
+  min-width: 120px;
+}
+@media (max-width: 800px) {
+  .mobile {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  /* .search {
+    display: hidden;
+  } */
+}
+@media (max-width: 800px) {
+  .mobile {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
+@media (min-width: 800px) and (max-width: 1200px) {
+  .mobile {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+}
+@media (min-width: 1200px) {
+  .mobile {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}

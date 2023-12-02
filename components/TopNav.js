@@ -20,7 +20,6 @@ import { DarkModeContext } from "../context/DarkModeContext";
 import { logoutApi, searchCourseApi } from "../components/api/";
 
 const { Item, SubMenu, ItemGroup } = Menu;
-
 const TopNav = () => {
   const [current, setCurrent] = useState("");
   const { state, dispatch } = useContext(Context);
@@ -189,10 +188,35 @@ const TopNav = () => {
     );
   };
   const autoComplete = () => {
+    const [screenWidth, setScreenWidth] = useState(0);
+
+    useEffect(() => {
+      const handleResize = () => {
+        if (typeof window !== "undefined") {
+          setScreenWidth(window.innerWidth);
+        }
+      };
+
+      // Initial setup
+      handleResize();
+
+      // Add event listener for window resize
+      if (typeof window !== "undefined") {
+        window.addEventListener("resize", handleResize);
+      }
+
+      // Clean up the event listener when the component is unmounted
+      return () => {
+        if (typeof window !== "undefined") {
+          window.removeEventListener("resize", handleResize);
+        }
+      };
+    }, []); // Empty dependency array means the effect runs once after the initial render
+
     return (
       <AutoComplete
         popupMatchSelectWidth={252}
-        style={{ width: 300 }}
+        className={screenWidth >= 1200 ? "largeWidth" : "smallWidth"}
         options={suggestedCourses.map((course) => ({ value: course }))}
         onSearch={handleSearchSuggestions}
         value={searchValue}
@@ -293,7 +317,7 @@ const TopNav = () => {
       selectedKeys={[current]}
       className={`${isDarkMode ? "bg-dark" : "bg-light"} ${
         isDarkMode ? "text-light" : "text-dark"
-      }`}
+      } mobile`}
     >
       <div style={{ display: "flex", alignItems: "center" }}>
         {/* app */}
@@ -310,18 +334,20 @@ const TopNav = () => {
         {/* darkMode button */}
         {darkModeButton()}
       </div>
+      <div className={"search"}>{autoComplete()}</div>
 
       <div
-        style={{ display: "flex", alignItems: "center", marginLeft: "auto" }}
+        style={{
+          display: "flex",
+          alignItems: "center",
+        }}
       >
         {/* FAQ */}
+
         {FAQ()}
 
         {/* about */}
         {about()}
-
-        {/* auto complete */}
-        {autoComplete()}
 
         {/* last-one */}
         {lastOne(user)}
