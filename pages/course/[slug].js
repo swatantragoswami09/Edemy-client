@@ -65,6 +65,7 @@ const SingleCourse = ({ course }) => {
     try {
       // check if user is logged in
       if (!user) router.push("/login");
+
       // check if already enrolled
       if (enrolled.status) {
         return router.push(`/user/course/${enrolled.course.slug}`);

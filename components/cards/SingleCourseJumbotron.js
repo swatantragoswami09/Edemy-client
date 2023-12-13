@@ -46,11 +46,11 @@ const SingleCourseJombotron = ({
     console.log(data);
   };
 
+  console.log("enrolled.status=>", enrolled.status)
   return (
     <div
-      className={`container-fluid ${isDarkMode ? "bg-dark" : "bg-primary"}   ${
-        isDarkMode ? "text-light" : "text-dark"
-      }`}
+      className={`container-fluid ${isDarkMode ? "bg-dark" : "bg-primary"}   ${isDarkMode ? "text-light" : "text-dark"
+        }`}
     >
       <div className="row">
         <div className="jumbotron bg-primary square p-5">
@@ -154,14 +154,23 @@ const SingleCourseJombotron = ({
                     icon={<SafetyOutlined />}
                     size="large"
                     disabled={loading}
-                    onClick={() =>
-                      paid
-                        ? enrolled.status
-                          ? router.push(`/user/course/${enrolled.course.slug}`)
-                          : setModal2Open(true)
-                        : handleFreeEnrollment
+                    onClick={(e) => {
+                      if (!paid && enrolled.status) {
+                        router.push(`/user/course/${enrolled.course.slug}`)
+                      } else if (paid && enrolled.status) {
+                        router.push(`/user/course/${enrolled.course.slug}`)
+                      } else if (!user) {
+                        router.push(`/login`)
+                      } else if (!paid && !enrolled.status) {
+                        handleFreeEnrollment(e)
+                        router.push(`/user/course/${enrolled.course.slug}`)
+                      } else {
+                        setModal2Open(true)
+                      }
+                    }
                     }
                   >
+
                     {user
                       ? enrolled.status
                         ? "Go to Course"
