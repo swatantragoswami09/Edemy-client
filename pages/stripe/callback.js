@@ -9,11 +9,9 @@ const StripeCallback = () => {
     dispatch,
   } = useContext(Context);
 
-  console.log("user=>", user);
   useEffect(() => {
     if (user) {
       axios.post("/api/get-account-status").then((res) => {
-        // console.log("res from status api=>", res);
         dispatch({
           type: "LOGIN",
           payload: res.data,

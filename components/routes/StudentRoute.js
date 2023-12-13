@@ -3,11 +3,7 @@ import { useRouter } from "next/router";
 import { SyncOutlined } from "@ant-design/icons";
 import { currentUserApi } from "../api/";
 
-// E-> Education
-// E-> Examination
-// E-> Experience
-// E-> Ethics
-// yeh mat bhoolna tony stark ne bhi iron man patharo ke beech banaya tha
+
 
 const StudentRoute = ({ children, showNav = true }) => {
   const [ok, setOk] = useState(false);

@@ -4,7 +4,7 @@ import { DarkModeContext } from "../context/DarkModeContext";
 import { useState } from "react";
 import { getAllCourses } from "../components/api";
 import { Carousel } from "antd";
-import { Footer } from "../components/footer/Footer";
+// import { Footer } from "../components/footer/Footer";
 
 const Index = ({ courses }) => {
   const { isDarkMode } = useContext(DarkModeContext);
@@ -91,7 +91,7 @@ const Index = ({ courses }) => {
       {getCourses(courses, loading)}
 
       {/* footer */}
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

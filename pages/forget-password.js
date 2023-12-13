@@ -6,7 +6,7 @@ import Link from "next/link";
 import { Context } from "../context";
 import { useRouter } from "next/router";
 import { DarkModeContext } from "../context/DarkModeContext";
-import { Footer } from "../components/footer/Footer";
+// import { Footer } from "../components/footer/Footer";
 
 const ForgetPassword = () => {
   // state
@@ -117,7 +117,7 @@ const ForgetPassword = () => {
           </button>
         </form>
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };

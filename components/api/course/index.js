@@ -52,3 +52,35 @@ export const searchCourseApi = async (value) => {
     console.log(error.message);
   }
 };
+
+// course checkout after enrollment apis
+// export const phonepayRedirectApi = async (requestBody) => {
+//   console.log("phonepay env", process.env.NEXT_PUBLIC_PHONEPAY_API);
+//   try {
+//     const res = await axios.post(
+//       // add into env
+//       `${process.env.NEXT_PUBLIC_PHONEPAY_API}/makePayment`,
+//       requestBody,
+//       {
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//       }
+//     );
+//     console.log("we are inside index", res.data.url);
+
+//     return res.data.url;
+//   } catch (error) {
+//     console.log(error.message);
+//   }
+// };
+export const stripeRedirectApi = async (course) => {
+  try {
+    const { data } = await axios.post(`/api/paid-enrollment/${course._id}`);
+    console.log("data: ", data);
+
+    return data;
+  } catch (error) {
+    console.log(error.message);
+  }
+};

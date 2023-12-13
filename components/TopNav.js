@@ -253,7 +253,6 @@ const TopNav = () => {
     );
   };
   const instructorNav = (user) => {
-    console.log("user=>", user);
     return (
       <>
         {user?.user?.role && user?.user?.role.includes("Instructor") && (

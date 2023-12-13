@@ -3,7 +3,7 @@ import { DarkModeContext } from "../../context/DarkModeContext";
 import { QuestionCircleOutlined } from "@ant-design/icons";
 import { Card, Collapse } from "antd";
 import { data } from "./data";
-import { Footer } from "../../components/footer/Footer";
+// import { Footer } from "../../components/footer/Footer";
 const { Meta } = Card;
 
 function FAQ() {
@@ -49,7 +49,7 @@ function FAQ() {
       {carosol()}
 
       {/* footer */}
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }
