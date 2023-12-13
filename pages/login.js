@@ -5,12 +5,15 @@ import { Context } from "../context";
 import { DarkModeContext } from "../context/DarkModeContext";
 import { useRouter } from "next/router";
 import { loginUserApi } from "../components/api";
-import { Footer } from "../components/footer/Footer";
-
+// import { Footer } from "../components/footer/Footer";
+import { toast } from "react-toastify";
+import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
+import { Input } from "antd";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [emailError, setEmailError] = useState("");
 
   // state
   const { state, dispatch } = useContext(Context);
@@ -25,8 +28,58 @@ const Login = () => {
     return null;
   }
 
+  const validateEmail = (input) => {
+    // Standard email validation using regex
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(input);
+  };
+
+  const validatePassword = (input) => {
+    const conditions = [
+      { regex: /(?=.*[A-Z])/, message: "at least one uppercase letter" },
+      { regex: /(?=.*[a-z])/, message: "at least one lowercase letter" },
+      { regex: /(?=.*\d)/, message: "at least one digit" },
+      {
+        regex: /(?=.*\W)/,
+        message: "at least one non-alphanumeric character",
+      },
+      {
+        regex: /(?=.*[A-Z][a-z])/,
+        message: "at least one alphabet in uppercase",
+      },
+    ];
+
+    for (const condition of conditions) {
+      if (!condition.regex.test(input)) {
+        toast.error(`Password must contain ${condition.message}`);
+        return false;
+      }
+    }
+
+    // Password must be at least 6 characters long (update this message)
+    if (input.length < 6) {
+      toast.error("Password must be at least 6 characters long");
+      return false;
+    }
+
+    // All conditions met
+    return true;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Validate email
+    if (!validateEmail(email)) {
+      toast.error("Please enter a valid email address,Email not found");
+      return;
+    }
+
+    // Validate password
+    if (!validatePassword(password)) {
+      // Password validation error will be handled by validatePassword function
+      return;
+    }
     setLoading(true);
     const data = await loginUserApi(email, password);
 
@@ -63,23 +116,31 @@ const Login = () => {
           }  ${isDarkMode ? "bg-dark" : "bg-light"}`}
         >
           <form onSubmit={handleSubmit} className="pt-4">
-            <input
+            <Input
               type="email"
-              className={`form-control mb-4 p-4 pt-4 ${
+              className={` mb-4 p-4 pt-4 ${
                 isDarkMode ? "bg-dark text-light" : ""
               }`}
+              style={{
+                border: isDarkMode ? "1px solid #ffffff" : "1px solid #000000",
+              }}
+              placeholder="Enter email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter email"
             />
-            <input
+
+            <Input.Password
               type="password"
-              className={`form-control mb-4 p-4 ${
-                isDarkMode ? "bg-dark text-light" : ""
-              }`}
+              className={` mb-4 p-4 ${isDarkMode ? "bg-dark text-light" : ""}`}
+              style={{
+                border: isDarkMode ? "1px solid #ffffff" : "1px solid #000000",
+              }}
+              placeholder="Enter password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter password"
+              iconRender={(visible) =>
+                visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+              }
             />
 
             <button
@@ -106,7 +167,7 @@ const Login = () => {
         </div>
 
         {/* footer */}
-        <Footer />
+        {/* <Footer /> */}
       </div>
     </>
   );

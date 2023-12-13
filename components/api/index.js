@@ -16,6 +16,8 @@ export {
   getUserAllOwnedCourses,
   getUserCoursesBySlug,
   searchCourseApi,
+  // phonepayRedirectApi,
+  stripeRedirectApi,
 } from "./course";
 export { uploadImage, removeImage, updateImage } from "./course/image";
 export {

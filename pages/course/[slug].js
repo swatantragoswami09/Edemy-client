@@ -8,13 +8,12 @@ import SingleCourseJombotron from "../../components/cards/SingleCourseJumbotron"
 import SingleCourseLessons from "../../components/cards/SingleCourseLessons";
 import { loadStripe } from "@stripe/stripe-js";
 import SingleComment from "../../components/comments/SingleComment";
-import { getCourseBySlug } from "../../components/api";
-import { Footer } from "../../components/footer/Footer";
-
-const comments = {
-  id: 1,
-  items: [],
-};
+import {
+  getCourseBySlug,
+  phonepayRedirectApi,
+  stripeRedirectApi,
+} from "../../components/api";
+// import { Footer } from "../../components/footer/Footer";
 const SingleCourse = ({ course }) => {
   // state
   const [showModal, setShowModal] = useState(false);
@@ -38,7 +37,6 @@ const SingleCourse = ({ course }) => {
 
   const checkEnrollment = async () => {
     const { data } = await axios.get(`/api/check-enrollment/${course._id}`);
-    console.log("data of enrollement=>", data);
     setEnrolled(data);
   };
 
@@ -63,7 +61,6 @@ const SingleCourse = ({ course }) => {
     }
   };
   const handleFreeEnrollment = async (e) => {
-    console.log("hi there");
     e.preventDefault();
     try {
       // check if user is logged in
@@ -79,8 +76,41 @@ const SingleCourse = ({ course }) => {
       router.push(`/user/course/${data.course.slug}`);
     } catch (error) {
       console.log(error);
-      toast("Enrollment failed. Try again");
+      toast.error("Enrollment failed. Try again");
       setLoading(false);
+    }
+  };
+
+  const handleStripeRedirect = async () => {
+    const data = await stripeRedirectApi(course);
+    console.log("data: ", data);
+    const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_KEY);
+    stripe.redirectToCheckout({ sessionId: data });
+  };
+
+  // transfer it into api/indexed.js
+  const handlePhonepayRedirect = async () => {
+    const requestBody = {
+      merchantId: "LUCK24SEVENPGONLINE",
+      merchantTransactionId: Math.random().toString(),
+      merchantUserId: "MUID123",
+      amount: 100, //paisa
+      redirectUrl: process.env.NEXT_PUBLIC_PHONEPAY_CALLBACK_URL,
+      redirectMode: "REDIRECT",
+      callbackUrl: process.env.NEXT_PUBLIC_PHONEPAY_CALLBACK_URL,
+      mobileNumber: "9999999999",
+      paymentInstrument: {
+        type: "PAY_PAGE",
+        // "type": "UPI"
+      },
+    };
+
+    try {
+      console.log("handlePhonepayRedirect: ");
+      // const phonepayUrl = await phonepayRedirectApi(requestBody);
+      // router.push(phonepayUrl);
+    } catch (error) {
+      console.error("Error:", error);
     }
   };
 
@@ -96,6 +126,8 @@ const SingleCourse = ({ course }) => {
         loading={loading}
         handlePaidEnrollment={handlePaidEnrollment}
         handleFreeEnrollment={handleFreeEnrollment}
+        handleStripeRedirect={handleStripeRedirect}
+        handlePhonepayRedirect={handlePhonepayRedirect}
         enrolled={enrolled}
         setEnrolled={setEnrolled}
       />
@@ -122,7 +154,7 @@ const SingleCourse = ({ course }) => {
         <SingleComment />
       </div>
 
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };

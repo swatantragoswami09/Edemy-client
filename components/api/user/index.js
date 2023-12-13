@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export const currentUserApi = async () => {
   try {
@@ -37,8 +38,8 @@ export const loginUserApi = async (email, password) => {
     console.log("response: " + res);
     return res.data;
   } catch (error) {
-    toast.error(error.response.data);
     console.log(error.response.data);
+    toast.error("Wrong credentials, User Not Found");
   }
 };
 
@@ -58,9 +59,10 @@ export const registerUserApi = async (name, email, password) => {
       email,
       password,
     });
+
     return res.data;
   } catch (error) {
-    toast.error(error.response.data);
     console.log(error.message);
+    toast.error("Email already registered,Try again");
   }
 };

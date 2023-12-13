@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import { currencyFormatter, dateFormater } from "../../utils/helpers";
 import { Badge, Modal, Button, Rate } from "antd";
 import ReactPlayer from "react-player";
@@ -6,7 +7,7 @@ import { useContext, useEffect } from "react";
 import { DarkModeContext } from "../../context/DarkModeContext";
 import { addReviewApi } from "../api";
 import { toast } from "react-toastify";
-
+import router from "next/router";
 const SingleCourseJombotron = ({
   course,
   showModal,
@@ -15,13 +16,15 @@ const SingleCourseJombotron = ({
   setPreview,
   user,
   loading,
+  handlePhonepayRedirect,
+  handleStripeRedirect,
   handlePaidEnrollment,
   handleFreeEnrollment,
   enrolled,
   setEnrolled,
 }) => {
   const { isDarkMode } = useContext(DarkModeContext);
-
+  const [modal2Open, setModal2Open] = useState(false);
   const {
     name,
     description,
@@ -141,23 +144,64 @@ const SingleCourseJombotron = ({
                   <LoadingOutlined className="h1 text-danger" />
                 </div>
               ) : (
-                <Button
-                  style={{ backgroundColor: "#F62817", color: "white" }}
-                  className="mb-3 mt-3"
-                  type="danger"
-                  block
-                  shape="round"
-                  icon={<SafetyOutlined />}
-                  size="large"
-                  disabled={loading}
-                  onClick={paid ? handlePaidEnrollment : handleFreeEnrollment}
-                >
-                  {user
-                    ? enrolled.status
-                      ? "Go to Course"
-                      : "Enroll"
-                    : "Login to enroll"}
-                </Button>
+                <>
+                  <Button
+                    style={{ backgroundColor: "#F62817", color: "white" }}
+                    className="mb-3 mt-3"
+                    type="danger"
+                    block
+                    shape="round"
+                    icon={<SafetyOutlined />}
+                    size="large"
+                    disabled={loading}
+                    onClick={() =>
+                      paid
+                        ? enrolled.status
+                          ? router.push(`/user/course/${enrolled.course.slug}`)
+                          : setModal2Open(true)
+                        : handleFreeEnrollment
+                    }
+                  >
+                    {user
+                      ? enrolled.status
+                        ? "Go to Course"
+                        : "Enroll"
+                      : "Login to enroll"}
+                  </Button>
+                  <Modal
+                    title="Please Select Payment Method"
+                    centered
+                    open={modal2Open}
+                    onOk={() => setModal2Open(false)}
+                    onCancel={() => setModal2Open(false)}
+                  >
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        gap: "28px",
+                        height: "400px",
+                      }}
+                    >
+                      <img
+                        src="/assets/phonepay.png"
+                        width={100}
+                        height={100}
+                        alt="phonepay.png"
+                        onClick={handlePhonepayRedirect}
+                      />
+                      <img
+                        src="/assets/stripelogo.png"
+                        width={100}
+                        height={100}
+                        alt="stripelogo.png"
+                        style={{ borderRadius: "1000px" }}
+                        onClick={handleStripeRedirect}
+                      />
+                    </div>
+                  </Modal>
+                </>
               )}
             </div>
           </div>

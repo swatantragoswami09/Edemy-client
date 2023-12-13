@@ -6,22 +6,62 @@ import { Context } from "../context";
 import { useRouter } from "next/router";
 import { DarkModeContext } from "../context/DarkModeContext";
 import { loginUserApi, registerUserApi } from "../components/api";
-import { Footer } from "../components/footer/Footer";
+// import { Footer } from "../components/footer/Footer";
+import { Input } from "antd";
+import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
+
+const validateName = (input) => {
+  const nameRegex = /^[A-Za-z\s]+$/;
+  return nameRegex.test(input);
+};
+
+const validateEmail = (input) => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(input);
+};
+
+const validatePassword = (input) => {
+  const conditions = [
+    { regex: /(?=.*[A-Z])/, message: "at least one uppercase letter" },
+    { regex: /(?=.*[a-z])/, message: "at least one lowercase letter" },
+    { regex: /(?=.*\d)/, message: "at least one digit" },
+    {
+      regex: /(?=.*\W)/,
+      message: "at least one non-alphanumeric character",
+    },
+    {
+      regex: /(?=.*[A-Z][a-z])/,
+      message: "at least one alphabet in uppercase",
+    },
+  ];
+
+  for (const condition of conditions) {
+    if (!condition.regex.test(input)) {
+      toast.error(`Password must contain ${condition.message}`);
+      return false;
+    }
+  }
+
+  // Password must be at least 8 characters long
+  if (input.length < 8) {
+    toast.error("Password must be at least 8 characters long");
+    return false;
+  }
+
+  return true;
+};
 
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [emailError, setEmailError] = useState("");
 
-  // state
   const { state, dispatch } = useContext(Context);
   const { user } = state;
 
-  // router
   const router = useRouter();
-
-  // DarkModeContext
   const { isDarkMode } = useContext(DarkModeContext);
 
   if (user !== null) {
@@ -29,7 +69,7 @@ const Register = () => {
     return null;
   }
 
-  const handlelogin = async (email, password) => {
+  const handleLogin = async (email, password) => {
     setLoading(true);
     const data = await loginUserApi(email, password);
 
@@ -41,10 +81,8 @@ const Register = () => {
         payload: data,
       });
 
-      // save in local storage
       window.localStorage.setItem("user", JSON.stringify(data));
 
-      // redirect
       router.push("/user");
     }
   };
@@ -52,18 +90,33 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!validateName(name)) {
+      toast.error("Please enter a valid name");
+      return;
+    }
+    if (!validateEmail(email)) {
+      setEmailError("Please enter a valid email address");
+      return;
+    }
+
+    if (!validatePassword(password)) {
+      return;
+    }
+
     setLoading(true);
     const data = await registerUserApi(name, email, password);
 
     if (!data) {
       setLoading(false);
+    } else {
+      setName("");
+      setEmail("");
+      setPassword("");
+      setLoading(false);
+
+      handleLogin(email, password);
+      toast.success(`${name} Registration Successful. Redirecting`);
     }
-    toast.success(`${name} Registration Successful. Redirecting`);
-    setName("");
-    setEmail("");
-    setPassword("");
-    setLoading(false);
-    handlelogin(email, password);
   };
 
   return (
@@ -74,32 +127,45 @@ const Register = () => {
         <h1 className="jumbotron text-center bg-primary square">Register</h1>
         <div className="container col-md-4 offset-md-4 pb-5">
           <form onSubmit={handleSubmit}>
-            <input
+            <Input
               type="text"
-              className={`form-control mb-4 p-4 pt-4 ${
+              className={` mb-4 p-4 pt-4 ${
                 isDarkMode ? "bg-dark text-light" : ""
               }`}
+              style={{
+                border: isDarkMode ? "1px solid #ffffff" : "1px solid #000000",
+              }}
+              placeholder="Enter name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="Enter name"
             />
-            <input
+
+            <Input
               type="email"
-              className={`form-control mb-4 p-4 pt-4 ${
+              className={` mb-4 p-4 pt-4 border ${
                 isDarkMode ? "bg-dark text-light" : ""
               }`}
+              style={{
+                border: isDarkMode ? "1px solid #ffffff" : "1px solid #000000",
+              }}
+              placeholder="Enter email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter email"
             />
-            <input
+            <Input.Password
               type="password"
-              className={`form-control mb-4 p-4 pt-4 ${
+              className={` mb-4 p-4 pt-4 ${
                 isDarkMode ? "bg-dark text-light" : ""
               }`}
+              style={{
+                border: isDarkMode ? "1px solid #ffffff" : "1px solid #000000",
+              }}
+              placeholder="Enter password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter password"
+              iconRender={(visible) =>
+                visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+              }
             />
 
             <button
@@ -116,7 +182,7 @@ const Register = () => {
         </div>
 
         {/* footer */}
-        <Footer />
+        {/* <Footer /> */}
       </div>
     </>
   );
