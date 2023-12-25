@@ -29,6 +29,7 @@ const BecomeInstructor = () => {
         window.location.href = res.data;
       })
       .catch((error) => {
+        toast("Please login First.");
         console.log(error.response.status);
         toast("Stripe onboarding failed. Try again.");
         setLoading(false);
@@ -42,15 +43,14 @@ const BecomeInstructor = () => {
       <div className="container">
         <div className="row">
           <div
-            className={` col-md-6 offset-md-3 text-center ${
-              isDarkMode ? "bg-dark" : "bg-light"
-            }   ${isDarkMode ? "text-light" : "text-dark"}`}
+            className={` col-md-6 offset-md-3 text-center ${isDarkMode ? "bg-dark" : "bg-light"
+              }   ${isDarkMode ? "text-light" : "text-dark"}`}
           >
             <UserSwitchOutlined className="display-1 pb-3" />
             <br />
-            <h2>Setup payout to publish courses on Edemy</h2>
+            <h2>Setup payout to publish courses on SKGUniversity</h2>
             <p className="text-warning">
-              Edemy parterns with stripe to transfer earning to bank account
+              SKG parterns with stripe to transfer earning to bank account
             </p>
             {/* show button */}
             <Button
@@ -66,7 +66,7 @@ const BecomeInstructor = () => {
                 loading
               }
             >
-              {loading ? "Processing" : "Payout Setup"}
+              {loading ? "Processing" : user ? "Payout Setup" : "Please Login"}
             </Button>
             <p className="lead">
               You will be redirected to stripe to complete onboarding precess

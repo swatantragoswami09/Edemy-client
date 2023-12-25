@@ -56,9 +56,8 @@ const Index = ({ courses }) => {
   const getCourses = (courses, loading) => {
     return (
       <div
-        className={`container-fluid ${isDarkMode ? "text-light" : ""}  ${
-          isDarkMode ? "bg-dark" : "bg-light"
-        }`}
+        className={`container-fluid ${isDarkMode ? "text-light" : ""}  ${isDarkMode ? "bg-dark" : "bg-light"
+          }`}
         style={{
           display: "flex",
           flexDirection: "row",
@@ -80,12 +79,11 @@ const Index = ({ courses }) => {
 
   return (
     <div
-      className={`container-fluid ${isDarkMode ? "text-light" : ""}  ${
-        isDarkMode ? "bg-dark" : "bg-light"
-      }`}
+      className={`container-fluid ${isDarkMode ? "text-light" : ""}  ${isDarkMode ? "bg-dark" : "bg-light"
+        }`}
     >
       {/* header */}
-      {header()}
+      {/* {header()} */}
 
       {/* all courses */}
       {getCourses(courses, loading)}
