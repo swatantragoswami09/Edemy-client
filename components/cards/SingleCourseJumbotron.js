@@ -181,8 +181,8 @@ const SingleCourseJombotron = ({
                     title="Please Select Payment Method"
                     centered
                     open={modal2Open}
-                    onOk={() => setModal2Open(false)}
                     onCancel={() => setModal2Open(false)}
+                    footer={null}
                   >
                     <div
                       style={{
@@ -199,13 +199,15 @@ const SingleCourseJombotron = ({
                         height={100}
                         alt="phonepay.png"
                         onClick={handlePhonepayRedirect}
+                        style={{ borderRadius: "1000px" ,cursor: "pointer" }}
+
                       />
                       <img
                         src="/assets/stripelogo.png"
                         width={100}
                         height={100}
                         alt="stripelogo.png"
-                        style={{ borderRadius: "1000px" }}
+                        style={{ borderRadius: "1000px" ,cursor: "pointer" }}
                         onClick={handleStripeRedirect}
                       />
                     </div>
