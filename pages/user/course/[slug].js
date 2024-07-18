@@ -89,13 +89,15 @@ const SingleCourse = () => {
         {course.lessons[clicked].video &&
           course.lessons[clicked].video.Location && (
             <>
-              <div className="wrapper">
+              <div className="wrapper"
+              sty
+              >
                 <ReactPlayer
                   className="player"
                   playing={false}
                   url={course.lessons[clicked].video.Location}
-                  width="100%"
-                  height="100%"
+                 max-width="1280px"
+                  max-height="720px"
                   controls
                   onEnded={() => markCompleted()}
                 />
